@@ -1,19 +1,31 @@
 # OpenAI
-
 Step 1:
-MacOS/Linux:
+Login to your OpenAI account at the following link:
+https://platform.openai.com/
+
+Step 2:
+Create an API KEY at the following link after logging in:
+https://platform.openai.com/api-keys
+
+Step 3:
+Add your credit card information to your account here:
+https://platform.openai.com/account/billing/payment-methods
+
+Step 4:
+Add a credit balance of $5 to your account here:
+https://platform.openai.com/account/billing/overview
+
+Note:
+MacOS/Linux use `pip3` and `python3`
+Windows use `pip` and `python`
+
+Step 5:
 Run the command `pip3 install --upgrade pip`
 Run the command `pip3 install -r requirements.txt`
 
-Windows:
-Run the command `pip install --upgrade pip`
-Run the command `pip install -r requirements.txt`
+Step 6:
+Run the command `python3 OpenAIConnector.py`
 
-Step 2:
-Login to your OpenAI account at the following link: https://platform.openai.com/
-
-Step 3:
-Create an API KEY at the following link after logging in: https://platform.openai.com/api-keys
-
-Step 4:
-Add your credit card information to your account here: 
+Step 7:
+Enter a prompt to ask ChatGPT: e.g. "What is the meaning of life?"
+Enter `exit` to exit out of the program!
