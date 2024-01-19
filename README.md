@@ -19,7 +19,7 @@ Step 5:
 Create a .env file and add the enviornment variable `OPEN_API_KEY=`
 
 Step 6:
-Copy and Paste the api_key value you created after `OPEN_API_KEY=`
+Copy and Paste the api_key value you created from Step 2 after `OPEN_API_KEY=`
 e.g. `OPEN_API_KEY=generated_api_key_value_from_openai`
 e.g. `OPEN_API_KEY=sh-121afhdsjaklqtqrquiopreuwxx`
 
