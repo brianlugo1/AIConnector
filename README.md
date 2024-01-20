@@ -1,5 +1,8 @@
 # OpenAI
 
+OpenAI Python Library Documentation:
+https://pypi.org/project/openai/
+
 Follow the instructions for setting up and running the project!
 
 Step 1:
