@@ -37,11 +37,11 @@ MacOS/Linux use `pip3` and `python3`
 Windows use `pip` and `python`
 
 Step 7:
-Run the command `pip3 install --upgrade pip`
-Run the command `pip3 install -r requirements.txt`
+Run `pip3 install --upgrade pip`
+Run `pip3 install -r requirements.txt`
 
 Step 8:
-Run the command `python3 OpenAIConnector.py`
+Run `python3 OpenAIConnector.py`
 
 Step 9:
 Enter a prompt to ask ChatGPT: e.g. "What is the meaning of life?"
