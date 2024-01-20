@@ -1,5 +1,14 @@
 # OpenAI
 
+The purpose of this project is to learn about interfacing with
+OpenAI's API using the openai python library! The project
+currently takes a message entered in stdin and sends the
+message to OpenAI. The project then prints the returned
+message. Use case for what is learned in this project:
+Incorperate OpenAI into your project by creating a
+service that takes a message, sends it to OpenAI, and
+uses the returned message in your project.
+
 OpenAI Python Library Documentation:
 https://pypi.org/project/openai/
 
