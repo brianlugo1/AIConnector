@@ -1,5 +1,7 @@
 # OpenAI
 
+Follow the instructions for setting up and running the project!
+
 Step 1:
 Login to your OpenAI account at the following link:
 https://platform.openai.com/
