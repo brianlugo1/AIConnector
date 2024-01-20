@@ -1,4 +1,5 @@
 # OpenAI
+
 Step 1:
 Login to your OpenAI account at the following link:
 https://platform.openai.com/
@@ -23,7 +24,13 @@ Copy and Paste the api_key value you created from Step 2 after `OPEN_API_KEY=`
 e.g. `OPEN_API_KEY=generated_api_key_value_from_openai`
 e.g. `OPEN_API_KEY=sh-121afhdsjaklqtqrquiopreuwxx`
 
-Note:
+NOTE:
+Ensure that you have python installed.
+
+If not, follow the instructions in the following link for installing python:
+https://www.python.org/downloads/
+
+For the following instructions:
 MacOS/Linux use `pip3` and `python3`
 Windows use `pip` and `python`
 
