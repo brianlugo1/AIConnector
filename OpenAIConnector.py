@@ -25,4 +25,11 @@ while True:
 
     print()
     print(completion.choices[0].message.content)
+    # print(completion.created)
+    # for comp in completion.choices:
+    #     print(comp.message)
+    #     print(comp.message.content)
+    #     print(comp.message.role)
+    #     print(comp.message.tool_calls)
+    #     print(comp.finish_reason)
     print()
