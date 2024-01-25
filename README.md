@@ -1,7 +1,14 @@
 # OpenAIConnector
 
 The purpose of this project is to learn about interfacing with
-OpenAI's API using the openai python library!
+OpenAI's API using the openai python library and using postgresql
+as the database to store conversations using the postgresql python
+library! The project not only sends questions to ChatGPT, but also
+stores asked questions and returned responses. Additionally, extra
+information is stored about when the question was asked and how
+many times the question has been asked overall. If a question has
+been asked already, the stored response is printed to save
+unnecessary api calls to OpenAI's API.
 
 OpenAI Python Library Documentation:
 https://pypi.org/project/openai/
