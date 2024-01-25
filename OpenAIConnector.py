@@ -4,6 +4,7 @@ load_dotenv()
 from openai import OpenAI
 import datetime
 import psycopg2
+import time
 import os
 
 def create_connection():
@@ -12,7 +13,7 @@ def create_connection():
     return conn, cur
 
 def create_table(conn, cur):
-    cur.execute("CREATE TABLE IF NOT EXISTS conversation (id serial PRIMARY KEY, question varchar UNIQUE NOT NULL, answer varchar NOT NULL, count integer NOT NULL, day date NOT NULL);")
+    cur.execute("CREATE TABLE IF NOT EXISTS conversation (id serial PRIMARY KEY, question varchar UNIQUE NOT NULL, answer varchar NOT NULL, count integer NOT NULL, day date NOT NULL, duration real NOT NULL);")
     conn.commit()
 
 def delete_table(conn, cur):
@@ -45,8 +46,8 @@ def select_all_conversations(cur):
     cur.execute("SELECT * FROM conversation;")
     return cur.fetchall()
 
-def insert_conversation(conn, cur, question, answer):
-    cur.execute(f"INSERT INTO conversation (question, answer, count, day) VALUES (\'{question}\', \'{answer}\', 1, \'{datetime.datetime.now().date()}\');")
+def insert_conversation(conn, cur, question, answer, seconds):
+    cur.execute(f"INSERT INTO conversation (question, answer, count, day, duration) VALUES (\'{question}\', \'{answer}\', 1, \'{datetime.datetime.now().date()}\', {seconds});")
     conn.commit()
 
 def delete_conversation(conn, cur, question, answer):
@@ -76,10 +77,20 @@ def select_most_asked_question(cur):
     cur.execute(f"SELECT * FROM conversation WHERE count=(SELECT MAX(count) FROM conversation);")
     return cur.fetchall()
 
+def select_longest_question_waited_for(cur):
+    cur.execute(f"SELECT * FROM conversation WHERE duration=(SELECT MAX(duration) FROM conversation);")
+    return cur.fetchall()
+
+def select_shortest_question_waited_for(cur):
+    cur.execute(f"SELECT * FROM conversation WHERE duration=(SELECT MIN(duration) FROM conversation);")
+    return cur.fetchall()
+
 def chatgpt(conn, cur, m):
     questions=search_question(cur, m)
 
     if len(questions)==0:
+        tic=time.perf_counter()
+
         client = OpenAI(
             api_key=os.environ.get("OPEN_API_KEY"),
         )
@@ -94,11 +105,15 @@ def chatgpt(conn, cur, m):
             ],
         )
 
+        toc=time.perf_counter()
+
+        print(f"ChatGPT responded in: {toc - tic:0.2f} seconds")
+
         print()
         print(completion.choices[0].message.content)
         print()
 
-        insert_conversation(conn, cur, m, completion.choices[0].message.content)
+        insert_conversation(conn, cur, m, completion.choices[0].message.content.replace("\'", "\""), f"{toc - tic:0.2f}")
     else:
         print()
         print("Question already asked:")
@@ -106,8 +121,11 @@ def chatgpt(conn, cur, m):
         print("--------------------------------------------------")
 
         for question in questions:
-            print(f"Stored answer: {question[2]}")
+            answer=question[2].replace("\"", "\'")
+
+            print(f'Stored answer: {answer}')
             print()
+            print(f"Time ChatGPT took to respond: {question[5]} seconds")
             print(f"Date asked: {question[4]}")
             print(f"Times asked: {question[3]+1}")
 
@@ -133,6 +151,12 @@ def details(cur, m):
     elif m=="m" or m=="most":
         print("Here is the most asked question:")
         conversations=select_most_asked_question(cur)
+    elif m=="l" or m=="longest":
+        print("Here is the question that took the longest:")
+        conversations=select_longest_question_waited_for(cur)
+    elif m=="s" or m=="shortest":
+        print("Here is the question that took the shortest:")
+        conversations=select_shortest_question_waited_for(cur)
     
     print()
 
@@ -148,10 +172,11 @@ def details(cur, m):
         print(conversation[1])
         print()
         print("Answer: ")
-        print(conversation[2])
+        print(conversation[2].replace("\"", "\'"))
         print()
-        print("Date asked: ", conversation[4])
-        print("Times asked: ", conversation[3])
+        print(f"Time ChatGPT took to respond: {conversation[5]} seconds")
+        print(f"Date asked: {conversation[4]}")
+        print(f"Times asked: {conversation[3]}")
         print()
     print("--------------------------------------------------")
     print()
@@ -182,6 +207,8 @@ def usage(m):
         print("    y,  yesterday: display a report for yesterday's conversations")
         print("    a,        all: display a report for yesterday's conversations")
         print("    m,       most: display a report for the most asked conversation")
+        print("    l,    longest: display a report for the conversation that took the longest")
+        print("    s,   shortest: display a report for the conversation that took the shortest")
         print()
 
 def openai_proc():
@@ -210,7 +237,6 @@ def openai_proc():
 
     create_table(conn, cur)
 
-
     while True:
         messages = str(input("oaic$ "))
 
@@ -228,7 +254,13 @@ def openai_proc():
                 if message=="details": usage("d")
                 else:
                     d=message.replace("details ", "")
-                    if d=="t" or d=="today" or d=="y" or d=="yesterday" or d=="a" or d=="all" or d=="m" or d=="most": details(cur, d)
+
+                    if d=="t" or d=="today" or \
+                       d=="y" or d=="yesterday" or \
+                       d=="a" or d=="all" or \
+                       d=="m" or d=="most" or \
+                       d=="l" or d=="longest" or \
+                       d=="s" or d=="shortest": details(cur, d)
                     else: usage("d")
             else: usage("h")
 

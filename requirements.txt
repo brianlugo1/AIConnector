@@ -1,3 +1,4 @@
+python-dotenv >= 1.0.0
 openai
 datetime
 # psycopg2 # For production

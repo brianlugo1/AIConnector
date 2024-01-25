@@ -1,5 +1,5 @@
 [x] Store Questions and corresponding answers to save API requests sent.
 [x] Store a statistic of tokens sent and received.
 [x] Store API requests made overall.
+[x] Store time it takes to get a response from OpenAI's API!
 [] Save money by removing unnecessary tokens in users' messages sent.
-[] Store time it takes to get a response from OpenAI's API!
