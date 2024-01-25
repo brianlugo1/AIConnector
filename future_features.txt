@@ -4,3 +4,5 @@
 [x] Store time it takes to get a response from OpenAI's API!
 [] Save money by removing unnecessary tokens in users' messages sent.
 [] Filter by length of question and answer to display the shortest and longest!
+[] Allow the ability to pass a file to be read in chatgpt!
+[] Allow the ability to add a link for text chatgpt!

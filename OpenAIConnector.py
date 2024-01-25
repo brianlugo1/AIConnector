@@ -262,7 +262,7 @@ def openai_proc():
                        d=="l" or d=="longest" or \
                        d=="s" or d=="shortest": details(cur, d)
                     else: usage("d")
-            else: usage("h")
+            else: print(f"oaic: command not found: {message}")
 
     print("exit")
     cur.close()
