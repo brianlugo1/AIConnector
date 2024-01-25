@@ -3,3 +3,4 @@
 [x] Store API requests made overall.
 [x] Store time it takes to get a response from OpenAI's API!
 [] Save money by removing unnecessary tokens in users' messages sent.
+[] Filter by length of question and answer to display the shortest and longest!
