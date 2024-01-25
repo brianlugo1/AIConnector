@@ -10,6 +10,8 @@ many times the question has been asked overall. If a question has
 been asked already, the stored response is printed to save
 unnecessary api calls to OpenAI's API.
 
+DISCLAIMER: Every api call made is charged by OpenAI!
+
 OpenAI Python Library Documentation:
 https://pypi.org/project/openai/
 
