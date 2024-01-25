@@ -8,3 +8,7 @@
 [] Allow the ability to add a link for text chatgpt!
 [] Format code from answer!
 [] From the generated code, create a file with that code!
+[] Create a dictionary with storing!
+[] Use texplorer to search words!
+[] PrefixTrie for autocomplete!
+[] Add length of a question and answer
