@@ -1,16 +1,41 @@
-# OpenAI
+# OpenAIConnector
 
 The purpose of this project is to learn about interfacing with
-OpenAI's API using the openai python library! The project
-currently takes a message entered in stdin and sends the
-message to OpenAI. The project then prints the returned
-message. Use case for what is learned in this project:
-Incorperate OpenAI into your project by creating a
-service that takes a message, sends it to OpenAI, and
-uses the returned message in your project.
+OpenAI's API using the openai python library!
 
 OpenAI Python Library Documentation:
 https://pypi.org/project/openai/
+
+Postgresql Documentation:
+https://postgresapp.com/documentation/
+
+
+Follow the instructions for downloading postgres:
+https://postgresapp.com/downloads.html
+
+
+Follow the instructions for setting up postgres:
+
+Step 1:
+To check if you correctly installed postgres, open a new terminal session.
+
+Run the command `psql`.
+
+If you get a message saying command not found, you have not correctly
+installed postgress. You will not be able to continue with the
+instructions until you correctly install postgres.
+
+Go to the link for help on troubleshooting:
+https://postgresapp.com/documentation/troubleshooting.html
+
+Step 2:
+Run the command `createdb openai` to create the new database in postgresql.
+
+Step 3:
+Run the command `psql openai` to open a connection to the database.
+
+Step 4:
+Run the command `\q` to quit session.
 
 Follow the instructions for setting up and running the project!
 
@@ -54,7 +79,3 @@ Run `pip3 install -r requirements.txt`
 
 Step 8:
 Run `python3 OpenAIConnector.py`
-
-Step 9:
-Enter a prompt to ask ChatGPT: e.g. "What is the meaning of life?"
-Enter `exit` to exit out of the program!
