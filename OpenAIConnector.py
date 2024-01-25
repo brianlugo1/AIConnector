@@ -252,7 +252,9 @@ def details(cur, m):
     elif m.find("date") == 0:
         m=m.replace("date", "").strip()
 
-        if m=="":
+        d=m.split("-")
+
+        if m=="" or len(d) != 3 or len(d[0]) != 4 or len(d[1]) != 2 or len(d[2]) != 2:
             usage("dd")
             return
 
