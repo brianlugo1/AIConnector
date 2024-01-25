@@ -12,3 +12,4 @@
 [] Use texplorer to search words!
 [] PrefixTrie for autocomplete!
 [] Add length of a question and answer
+[] Filter conversations by given date!

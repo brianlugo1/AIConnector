@@ -155,6 +155,13 @@ def select_conversation_given_id(cur, id):
 
     return cur.fetchall()
 
+def select_conversations_give_date(cur, date):
+    cur.execute(f"SELECT * FROM conversation \
+        WHERE day=\'{date}\';\
+    ")
+
+    return cur.fetchall()
+
 def chatgpt(conn, cur, m):
     questions=search_question(cur, m)
 
@@ -242,7 +249,16 @@ def details(cur, m):
     elif m.isnumeric():
         print(f"Here is the conversation with the id [{m}]")
         conversations=select_conversation_given_id(cur, m)
-    
+    elif m.find("date") == 0:
+        m=m.replace("date", "").strip()
+
+        if m=="":
+            usage("dd")
+            return
+
+        print(f"Here is the conversations with the given date [{m}]")
+        conversations=select_conversations_give_date(cur, m)
+
     print()
 
     print("--------------------------------------------------")
@@ -312,13 +328,18 @@ def usage(m):
         print("Usage: details [options]")
         print()
         print("Options:")
-        print("    t,      today: display a report for today's conversations")
-        print("    y,  yesterday: display a report for yesterday's conversations")
-        print("    a,        all: display a report for yesterday's conversations")
-        print("    m,       most: display a report for the most asked conversation")
-        print("    l,    longest: display a report for the conversation that took the longest")
-        print("    s,   shortest: display a report for the conversation that took the shortest")
-        print("             [id]: display the report for the conversation with the given id")
+        print("    t,       today: display a report for today's conversations")
+        print("    y,   yesterday: display a report for yesterday's conversations")
+        print("    a,         all: display a report for yesterday's conversations")
+        print("    m,        most: display a report for the most asked conversation")
+        print("    l,     longest: display a report for the conversation that took the longest")
+        print("    s,    shortest: display a report for the conversation that took the shortest")
+        print("              [id]: display the report for the conversation with the given id")
+        print("       date [date]: display the report for the conversation with the given date")
+        print("                     (expected format: YYYY-MM-DD)")
+        print()
+    elif m=="dd":
+        print("Usage: details date [YYYY-DD-MM]")
         print()
 
 def openai_proc():
@@ -377,7 +398,8 @@ def openai_proc():
                        d=="m" or d=="most" or \
                        d=="l" or d=="longest" or \
                        d=="s" or d=="shortest" or \
-                       d.isnumeric(): details(cur, d)
+                       d.isnumeric() or \
+                       d.find("date") == 0 : details(cur, d)
                     else: usage("d")
             else: print(f"oaic: command not found: {message}")
 
