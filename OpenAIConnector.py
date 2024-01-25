@@ -103,13 +103,15 @@ def chatgpt(conn, cur, m):
         print()
         print("Question already asked:")
         print()
+        print("--------------------------------------------------")
+
         for question in questions:
-            print("--------------------------------------------------")
             print(f"Stored answer: {question[2]}")
             print()
             print(f"Date asked: {question[4]}")
             print(f"Times asked: {question[3]+1}")
-            print("--------------------------------------------------")
+
+        print("--------------------------------------------------")
         print()
 
         increase_count_of_question(conn, cur, m)
@@ -134,17 +136,15 @@ def details(cur, m):
     
     print()
 
+    print("--------------------------------------------------")
+    print()
+
     if len(conversations)==0:
-        print("--------------------------------------------------")
-        print()
         print("No Conversations to show!")
-        print()
-        print("--------------------------------------------------")
         print()
 
     for conversation in conversations:
-        print("--------------------------------------------------")
-        print("Question: ")
+        print(f"Question:                                      [{conversation[0]}]")
         print(conversation[1])
         print()
         print("Answer: ")
@@ -152,8 +152,9 @@ def details(cur, m):
         print()
         print("Date asked: ", conversation[4])
         print("Times asked: ", conversation[3])
-        print("--------------------------------------------------")
         print()
+    print("--------------------------------------------------")
+    print()
 
 def usage(m):
     if m=="h":
@@ -209,24 +210,29 @@ def openai_proc():
 
     create_table(conn, cur)
 
+
     while True:
-        message = str(input("oaic$ "))
+        messages = str(input("oaic$ "))
 
-        if message=="help" or message=="h" : usage("h")
-        elif message=="clear": os.system("clear")
-        elif message=="exit": break
-        elif message=="": pass
-        elif message.find("chatgpt")!=-1:
-            if message=="chatgpt":usage("o")
-            else: chatgpt(conn, cur, message.replace("chatgpt ", "").lower().strip())
-        elif message.find("details")!=-1:
-            if message=="details": usage("d")
-            else:
-                d=message.replace("details ", "")
-                if d=="t" or d=="today" or d=="y" or d=="yesterday" or d=="a" or d=="all" or d=="m" or d=="most": details(cur, d)
-                else: usage("d")
-        else: usage("h")
+        if messages.find("exit") != -1: break
 
+        for message in messages.split(";"):
+            message=message.strip()
+            if message=="help" or message=="h" : usage("h")
+            elif message=="clear": os.system("clear")
+            elif message=="": pass
+            elif message.find("chatgpt")!=-1:
+                if message=="chatgpt":usage("o")
+                else: chatgpt(conn, cur, message.replace("chatgpt ", "").lower().strip())
+            elif message.find("details")!=-1:
+                if message=="details": usage("d")
+                else:
+                    d=message.replace("details ", "")
+                    if d=="t" or d=="today" or d=="y" or d=="yesterday" or d=="a" or d=="all" or d=="m" or d=="most": details(cur, d)
+                    else: usage("d")
+            else: usage("h")
+
+    print("exit")
     cur.close()
     conn.close()
 
