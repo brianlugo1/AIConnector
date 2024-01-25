@@ -104,10 +104,12 @@ def chatgpt(conn, cur, m):
         print("Question already asked:")
         print()
         for question in questions:
-            print("Stored answer: ", question[2])
+            print("--------------------------------------------------")
+            print(f"Stored answer: {question[2]}")
             print()
-            print("Date asked: ", question[4])
-            print("Times asked: ", question[3]+1)
+            print(f"Date asked: {question[4]}")
+            print(f"Times asked: {question[3]+1}")
+            print("--------------------------------------------------")
         print()
 
         increase_count_of_question(conn, cur, m)
@@ -133,10 +135,15 @@ def details(cur, m):
     print()
 
     if len(conversations)==0:
+        print("--------------------------------------------------")
+        print()
         print("No Conversations to show!")
+        print()
+        print("--------------------------------------------------")
         print()
 
     for conversation in conversations:
+        print("--------------------------------------------------")
         print("Question: ")
         print(conversation[1])
         print()
@@ -145,6 +152,7 @@ def details(cur, m):
         print()
         print("Date asked: ", conversation[4])
         print("Times asked: ", conversation[3])
+        print("--------------------------------------------------")
         print()
 
 def usage(m):
