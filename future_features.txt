@@ -6,3 +6,5 @@
 [] Filter by length of question and answer to display the shortest and longest!
 [] Allow the ability to pass a file to be read in chatgpt!
 [] Allow the ability to add a link for text chatgpt!
+[] Format code from answer!
+[] From the generated code, create a file with that code!

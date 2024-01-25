@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from openai import OpenAI
+import textwrap
 import datetime
 import psycopg2
 import time
@@ -85,6 +86,10 @@ def select_shortest_question_waited_for(cur):
     cur.execute(f"SELECT * FROM conversation WHERE duration=(SELECT MIN(duration) FROM conversation);")
     return cur.fetchall()
 
+def select_conversation_given_id(cur, id):
+    cur.execute(f"SELECT * FROM conversation WHERE id={id};")
+    return cur.fetchall()
+
 def chatgpt(conn, cur, m):
     questions=search_question(cur, m)
 
@@ -110,7 +115,10 @@ def chatgpt(conn, cur, m):
         print(f"ChatGPT responded in: {toc - tic:0.2f} seconds")
 
         print()
-        print(completion.choices[0].message.content)
+
+        for line in textwrap.wrap(completion.choices[0].message.content):
+            print(line)
+
         print()
 
         insert_conversation(conn, cur, m, completion.choices[0].message.content.replace("\'", "\""), f"{toc - tic:0.2f}")
@@ -123,7 +131,12 @@ def chatgpt(conn, cur, m):
         for question in questions:
             answer=question[2].replace("\"", "\'")
 
-            print(f'Stored answer: {answer}')
+            print('Stored answer:')
+            print()
+
+            for line in textwrap.wrap(answer):
+                print(f"{line}")
+
             print()
             print(f"Time ChatGPT took to respond: {question[5]} seconds")
             print(f"Date asked: {question[4]}")
@@ -157,6 +170,9 @@ def details(cur, m):
     elif m=="s" or m=="shortest":
         print("Here is the question that took the shortest:")
         conversations=select_shortest_question_waited_for(cur)
+    elif m.isnumeric():
+        print(f"Here is the conversation with the id [{m}]")
+        conversations=select_conversation_given_id(cur, m)
     
     print()
 
@@ -164,16 +180,40 @@ def details(cur, m):
     print()
 
     if len(conversations)==0:
-        print("No Conversations to show!")
+        if m.isnumeric():
+            print(f"No Conversation with id [{m}]")
+        else:
+            print("No Conversations to show!")
         print()
 
     for conversation in conversations:
         print(f"Question:                                      [{conversation[0]}]")
-        print(conversation[1])
+
+        for line in textwrap.wrap(conversation[1], width=50):
+            print(f"{line}")
+
         print()
+
         print("Answer: ")
-        print(conversation[2].replace("\"", "\'"))
-        print()
+
+        stored_message=conversation[2].replace("\"", "\'")
+
+        if stored_message.find('```') != -1:
+            stored_message=stored_message.split('```')
+            for index in range(1, len(stored_message)):
+                if index%2==1:
+                    for line in textwrap.wrap(stored_message[index-1], width=50):
+                        print(f"{line}")
+                else:
+                    print(stored_message[index-1])
+                print()
+
+        else:
+            for line in textwrap.wrap(stored_message, width=50):
+                print(f"{line}")
+
+            print()
+
         print(f"Time ChatGPT took to respond: {conversation[5]} seconds")
         print(f"Date asked: {conversation[4]}")
         print(f"Times asked: {conversation[3]}")
@@ -209,6 +249,7 @@ def usage(m):
         print("    m,       most: display a report for the most asked conversation")
         print("    l,    longest: display a report for the conversation that took the longest")
         print("    s,   shortest: display a report for the conversation that took the shortest")
+        print("             [id]: display the report for the conversation with the given id")
         print()
 
 def openai_proc():
@@ -240,9 +281,12 @@ def openai_proc():
     while True:
         messages = str(input("oaic$ "))
 
-        if messages.find("exit") != -1: break
+        if messages.find("exit")!=-1:break
 
-        for message in messages.split(";"):
+        if messages.find("&&")!=-1:messages=messages.split("&&")
+        else:messages=messages.split(";")
+
+        for message in messages:
             message=message.strip()
             if message=="help" or message=="h" : usage("h")
             elif message=="clear": os.system("clear")
@@ -260,7 +304,8 @@ def openai_proc():
                        d=="a" or d=="all" or \
                        d=="m" or d=="most" or \
                        d=="l" or d=="longest" or \
-                       d=="s" or d=="shortest": details(cur, d)
+                       d=="s" or d=="shortest" or \
+                       d.isnumeric(): details(cur, d)
                     else: usage("d")
             else: print(f"oaic: command not found: {message}")
 
