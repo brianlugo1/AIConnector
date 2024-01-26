@@ -23,3 +23,5 @@
     - Export to Markdown
 
 [] Work on terminal GUI
+
+[] Convert double quotes from user to single quotes
