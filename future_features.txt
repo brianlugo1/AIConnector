@@ -15,3 +15,11 @@
 [] PrefixTrie for autocomplete!
 
 [] Add length of a question and answer
+
+[] Organize my notes? Markdown
+[] Export feature -> create a log file of conversations on a given day!
+    - Export to CSV
+    - Export to JSON
+    - Export to Markdown
+
+[] Work on terminal GUI
