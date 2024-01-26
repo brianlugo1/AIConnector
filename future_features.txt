@@ -4,11 +4,17 @@
 [x] Store time it takes to get a response from OpenAI's API!
 [x] Format code from answer!
 [x] Filter conversations by given date!
+[x] Convert double quotes from user to single quotes
+
 [] Save money by removing unnecessary tokens in users' messages sent.
+
 [] Filter by length of question and answer to display the shortest and longest!
+
 [] Allow the ability to pass a file to be read in chatgpt!
 [] Allow the ability to add a link for text chatgpt!
+
 [] From the generated code, create a file with that code!
+
 [] Create a dictionary with storing!
 
 [] Use texplorer to search words!
@@ -17,6 +23,7 @@
 [] Add length of a question and answer
 
 [] Organize my notes? Markdown
+
 [] Export feature -> create a log file of conversations on a given day!
     - Export to CSV
     - Export to JSON
@@ -24,4 +31,4 @@
 
 [] Work on terminal GUI
 
-[] Convert double quotes from user to single quotes
+[] How to change the color of stdout?

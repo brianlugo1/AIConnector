@@ -276,7 +276,7 @@ def details(cur, m):
     for conversation in conversations:
         print(f"Question:                                      [{conversation[0]}]")
 
-        for line in textwrap.wrap(conversation[1], width=50):
+        for line in textwrap.wrap(conversation[1].replace("\"", "\'"), width=50):
             print(f"{line}")
 
         print()
@@ -332,7 +332,7 @@ def usage(m):
         print("Options:")
         print("    t,       today: display a report for today's conversations")
         print("    y,   yesterday: display a report for yesterday's conversations")
-        print("    a,         all: display a report for yesterday's conversations")
+        print("    a,         all: display a report for all conversations")
         print("    m,        most: display a report for the most asked conversation")
         print("    l,     longest: display a report for the conversation that took the longest")
         print("    s,    shortest: display a report for the conversation that took the shortest")
@@ -383,13 +383,13 @@ def openai_proc():
             if message=="help" or message=="h" : usage("h")
             elif message=="clear": os.system("clear")
             elif message=="": pass
-            elif message.find("chatgpt")!=-1:
+            elif message.find("chatgpt")==0:
                 if message=="chatgpt":usage("o")
                 else: chatgpt(
                     conn, cur,
-                    message.replace("chatgpt ", "").lower().strip()
+                    message.replace("chatgpt ", "").replace("\'", "\"").lower().strip()
                 )
-            elif message.find("details")!=-1:
+            elif message.find("details")==0:
                 if message=="details": usage("d")
                 else:
                     d=message.replace("details ", "")
