@@ -23,6 +23,9 @@ https://docs.perplexity.ai/
 Perplexity API Tutorial in Python:
 https://blog.perplexity.ai/blog/introducing-pplx-api
 
+Link for Available Models for Perplexity:
+https://docs.perplexity.ai/docs/model-cards
+
 Datetime Documentation:
 https://docs.python.org/3/library/datetime.html
 
