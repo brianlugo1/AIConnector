@@ -31,7 +31,5 @@
     - Export to JSON
     - Export to Markdown
 
-[] Work on terminal GUI
-
 [] Convert double quotes to another character to change back!
 [] Add feature that when question asked is stored, prompt to use stored answer or ask chatgpt again!
