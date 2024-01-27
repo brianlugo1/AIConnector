@@ -1,352 +1,19 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from openai import OpenAI
-import textwrap
-import datetime
-import psycopg2
-import time
+from queries import *
+from chatgpt import chatgpt
+from details import details
+from usage import usage
+from colorama import init, Fore
 import os
 
-def create_connection():
-    conn = psycopg2.connect("dbname=openai")
-    cur = conn.cursor()
-    return conn, cur
-
-def create_table(conn, cur):
-    cur.execute("CREATE TABLE IF NOT EXISTS conversation (\
-        id serial PRIMARY KEY, \
-        question varchar UNIQUE NOT NULL, \
-        answer varchar NOT NULL, \
-        count integer NOT NULL, \
-        day date NOT NULL, \
-        duration real NOT NULL\
-    );")
-
-    conn.commit()
-
-def delete_table(conn, cur):
-    cur.execute("DROP TABLE IF EXISTS conversation;")
-
-    conn.commit()
-
-def clear_table(conn, cur):
-    cur.execute("TRUNCATE conversation;")
-
-    conn.commit()
-
-def select_table_names(cur):
-    cur.execute("SELECT * FROM pg_catalog.pg_tables \
-        WHERE schemaname='public';\
-    ")
-
-    return cur.fetchall()
-
-def select_table_columns(cur):
-    cur.execute("SELECT * FROM information_schema.columns \
-        WHERE table_name='conversation';\
-    ")
-
-    return cur.fetchall()
-
-def print_table_details(cur):
-    print("Details about Table:")
-    print()
-    print("Name:   ", select_table_names(cur)[0][1])
-
-    for table in select_table_columns(cur):
-        print("Column: ", table[3], "( Type: ", table[7], ")")
-
-    print()
-
-def select_all_conversations(cur):
-    cur.execute("\
-        SELECT * FROM conversation;\
-    ")
-
-    return cur.fetchall()
-
-def insert_conversation(conn, cur, question, answer, seconds):
-    cur.execute(f"INSERT INTO conversation (\
-            question, answer, count, \
-            day, duration\
-        ) VALUES (\
-            \'{question}\', \'{answer}\', 1, \
-            \'{datetime.datetime.now().date()}\', \
-            {seconds}\
-        );\
-    ")
-
-    conn.commit()
-
-def delete_conversation(conn, cur, question, answer):
-    cur.execute(f"DELETE FROM conversation \
-        WHERE conversation.question=\'{question}\' \
-        AND conversation.answer=\'{answer}\';\
-    ")
-
-    conn.commit()
-
-def search_question(cur, question):
-    cur.execute(f"SELECT * FROM conversation \
-        WHERE conversation.question=\'{question}\';\
-    ")
-
-    return cur.fetchall()
-
-def increase_count_of_question(conn, cur, question):
-    cur.execute(f"UPDATE conversation \
-        SET count = count+1 \
-        WHERE conversation.question=\'{question}\';\
-    ")
-
-    conn.commit()
-
-def select_questions_asked(cur, d):
-    day=""
-
-    if d=="t": day=datetime.datetime.now().date()
-    elif d=="y":
-        day=datetime.datetime.now().date().replace(
-            day=datetime.datetime.now().date().day-1
-        )
-
-    elif d=="a": return select_all_conversations(cur)
-
-    cur.execute(f"SELECT * FROM conversation \
-        WHERE conversation.day=\'{day}\';\
-    ")
-
-    return cur.fetchall()
-
-def select_most_asked_question(cur):
-    cur.execute(f"""
-        SELECT * FROM conversation
-        WHERE count=(
-            SELECT MAX(count)
-            FROM conversation
-        );
-    """)
-
-    return cur.fetchall()
-
-def select_longest_question_waited_for(cur):
-    cur.execute(f"SELECT * FROM conversation \
-        WHERE duration=(\
-            SELECT MAX(duration) \
-            FROM conversation\
-        );\
-    ")
-
-    return cur.fetchall()
-
-def select_shortest_question_waited_for(cur):
-    cur.execute(f"SELECT * FROM conversation \
-        WHERE duration=(\
-        SELECT MIN(duration) FROM conversation\
-    );")
-
-    return cur.fetchall()
-
-def select_conversation_given_id(cur, id):
-    cur.execute(f"SELECT * FROM conversation \
-        WHERE id={id};\
-    ")
-
-    return cur.fetchall()
-
-def select_conversations_give_date(cur, date):
-    cur.execute(f"SELECT * FROM conversation \
-        WHERE day=\'{date}\';\
-    ")
-
-    return cur.fetchall()
-
-def chatgpt(conn, cur, m):
-    questions=search_question(cur, m)
-
-    if len(questions)==0:
-        tic=time.perf_counter()
-
-        client = OpenAI(
-            api_key=os.environ.get("OPEN_API_KEY"),
-        )
-
-        completion = client.chat.completions.create(
-            model='gpt-3.5-turbo',
-            messages=[
-                {
-                    'role': 'user',
-                    'content': m,
-                }
-            ],
-        )
-
-        toc=time.perf_counter()
-
-        print(f"ChatGPT responded in: {toc - tic:0.2f} seconds")
-
-        print()
-
-        for line in textwrap.wrap(completion.choices[0].message.content):
-            print(line)
-
-        print()
-
-        insert_conversation(
-            conn, cur, m,
-            completion.choices[0].message.content.replace("\'", "\""),
-            f"{toc - tic:0.2f}"
-        )
-    else:
-        print()
-        print("Question already asked:")
-        print()
-        print("--------------------------------------------------")
-
-        for question in questions:
-            answer=question[2].replace("\"", "\'")
-
-            print('Stored answer:')
-            print()
-
-            for line in textwrap.wrap(answer):
-                print(f"{line}")
-
-            print()
-            print(f"Time ChatGPT took to respond: {question[5]} seconds")
-            print(f"Date asked: {question[4]}")
-            print(f"Times asked: {question[3]+1}")
-
-        print("--------------------------------------------------")
-        print()
-
-        increase_count_of_question(conn, cur, m)
-
-def details(cur, m):
-    print()
-
-    conversations=[]
-
-    if m=="t" or m=="today":
-        print("Here is a report of today's conversations:")
-        conversations=select_questions_asked(cur, "t")
-    elif m=="y" or m=="yesterday":
-        print("Here is a report of yesterday's conversations:")
-        conversations=select_questions_asked(cur, "y")
-    elif m=="a" or m=="all":
-        print("Here is a report of all conversations:")
-        conversations=select_questions_asked(cur, "a")
-    elif m=="m" or m=="most":
-        print("Here is the most asked question:")
-        conversations=select_most_asked_question(cur)
-    elif m=="l" or m=="longest":
-        print("Here is the question that took the longest:")
-        conversations=select_longest_question_waited_for(cur)
-    elif m=="s" or m=="shortest":
-        print("Here is the question that took the shortest:")
-        conversations=select_shortest_question_waited_for(cur)
-    elif m.isnumeric():
-        print(f"Here is the conversation with the id [{m}]")
-        conversations=select_conversation_given_id(cur, m)
-    elif m.find("date") == 0:
-        m=m.replace("date", "").strip()
-
-        d=m.split("-")
-
-        if m=="" or len(d) != 3 or len(d[0]) != 4 or len(d[1]) != 2 or len(d[2]) != 2:
-            usage("dd")
-            return
-
-        print(f"Here is the conversations with the given date [{m}]")
-        conversations=select_conversations_give_date(cur, m)
-
-    print()
-
-    print("--------------------------------------------------")
-    print()
-
-    if len(conversations)==0:
-        if m.isnumeric():
-            print(f"No Conversation with id [{m}]")
-        else:
-            print("No Conversations to show!")
-        print()
-
-    for conversation in conversations:
-        print(f"Question:                                      [{conversation[0]}]")
-
-        for line in textwrap.wrap(conversation[1].replace("\"", "\'"), width=50):
-            print(f"{line}")
-
-        print()
-
-        print("Answer: ")
-
-        stored_message=conversation[2].replace("\"", "\'")
-
-        if stored_message.find('```') != -1:
-            stored_message=stored_message.split('```')
-            for index in range(1, len(stored_message)):
-                if index%2==1:
-                    for line in textwrap.wrap(stored_message[index-1], width=50):
-                        print(f"{line}")
-                else:
-                    print(stored_message[index-1])
-                print()
-
-        else:
-            for line in textwrap.wrap(stored_message, width=50):
-                print(f"{line}")
-
-            print()
-
-        print(f"Time ChatGPT took to respond: {conversation[5]} seconds")
-        print(f"Date asked: {conversation[4]}")
-        print(f"Times asked: {conversation[3]}")
-        print()
-    print("--------------------------------------------------")
-    print()
-
-def usage(m):
-    if m=="h":
-        print()
-        print("Usage: [options]")
-        print()
-        print("Options:")
-        print("    h,    help: display this message")
-        print("         clear: clear the console")
-        print("          exit: exit OpenAIConnector")
-        print()
-        print("       chatgpt: ask chatgpt a question")
-        print("       details: view details about existing conversations")
-        print()
-    elif m=="o":
-        print()
-        print("Usage: chatgpt [question]")
-        print()
-    elif m=="d":
-        print()
-        print("Usage: details [options]")
-        print()
-        print("Options:")
-        print("    t,       today: display a report for today's conversations")
-        print("    y,   yesterday: display a report for yesterday's conversations")
-        print("    a,         all: display a report for all conversations")
-        print("    m,        most: display a report for the most asked conversation")
-        print("    l,     longest: display a report for the conversation that took the longest")
-        print("    s,    shortest: display a report for the conversation that took the shortest")
-        print("              [id]: display the report for the conversation with the given id")
-        print("       date [date]: display the report for the conversation with the given date")
-        print("                     (expected format: YYYY-MM-DD)")
-        print()
-    elif m=="dd":
-        print("Usage: details date [YYYY-DD-MM]")
-        print()
 
 def openai_proc():
+    init()
     os.system("clear")
 
+    print(f"{Fore.CYAN}")
     print("------------------------------------------------")
     print("|         Welcome to OpenAIConnector           |")
     print("|                                              |")
@@ -371,7 +38,9 @@ def openai_proc():
     create_table(conn, cur)
 
     while True:
-        messages = str(input("oaic$ "))
+        print()
+        messages = str(input(f"{Fore.BLUE}oaic{Fore.CYAN}$ {Fore.GREEN}"))
+        print(f"{Fore.RED}")
 
         if messages.find("exit")!=-1:break
 
@@ -405,7 +74,10 @@ def openai_proc():
                     else: usage("d")
             else: print(f"oaic: command not found: {message}")
 
-    print("exit")
+    print(f"{Fore.RED}exit")
+
+    print()
+
     cur.close()
     conn.close()
 

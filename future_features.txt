@@ -5,6 +5,8 @@
 [x] Format code from answer!
 [x] Filter conversations by given date!
 [x] Convert double quotes from user to single quotes
+[x] Restructure services into seperate .py files and import them!
+[x] Change the color of stdout!
 
 [] Save money by removing unnecessary tokens in users' messages sent.
 
@@ -31,5 +33,5 @@
 
 [] Work on terminal GUI
 
-[] How to change the color of stdout?
 [] Convert double quotes to another character to change back!
+[] Add feature that when question asked is stored, prompt to use stored answer or ask chatgpt again!
