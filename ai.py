@@ -80,7 +80,7 @@ def ai(ai, conn, cur, m):
 
             print()
 
-            print(f"Time {question[6]} took to respond: {question[5]} seconds")
+            print(f"Time {Fore.GREEN}{question[6]}{Fore.YELLOW} took to respond: {question[5]} seconds")
             print(f"Date asked: {question[4]}")
             print(f"Times asked: {question[3]+1}")
 
