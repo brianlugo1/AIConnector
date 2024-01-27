@@ -7,7 +7,7 @@ import textwrap
 
 def details(cur, m):
     init()
-    print(f"{Fore.MAGENTA}")
+    print(f"{Fore.GREEN}")
 
     conversations=[]
 
