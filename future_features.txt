@@ -35,3 +35,4 @@
 [] Convert double quotes to another character to change back!
 [] Add feature that when question asked is stored, prompt to use stored answer or ask chatgpt again!
 [] Filter by ai asked!
+[] Keep an array of asked questions for both Chatgpt and Perplexity to have the context when asking questions!
