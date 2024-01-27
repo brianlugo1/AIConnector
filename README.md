@@ -15,8 +15,17 @@ DISCLAIMER: Every api call made is charged by OpenAI!
 OpenAI Python Library Documentation:
 https://pypi.org/project/openai/
 
+Datetime Documentation:
+https://docs.python.org/3/library/datetime.html
+
 Postgresql Documentation:
 https://postgresapp.com/documentation/
+
+Textwrap Documentation:
+https://docs.python.org/3/library/textwrap.html
+
+Colorama Documentation:
+https://pypi.org/project/colorama/
 
 
 Follow the instructions for downloading postgres:
