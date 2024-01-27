@@ -44,7 +44,6 @@ def ai(ai, conn, cur, m):
 
         toc=time.perf_counter()
 
-        # TODO: Capitalize the first letter of ai
         print(f"{ai} responded in: {toc - tic:0.2f} seconds")
 
         print()
@@ -81,7 +80,6 @@ def ai(ai, conn, cur, m):
 
             print()
 
-            # TODO: Capitalize the first letter of question[6]
             print(f"Time {question[6]} took to respond: {question[5]} seconds")
             print(f"Date asked: {question[4]}")
             print(f"Times asked: {question[3]+1}")
