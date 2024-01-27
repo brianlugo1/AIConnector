@@ -39,7 +39,7 @@ def openai_proc():
 
     while True:
         print()
-        messages = str(input(f"{Fore.BLUE}oaic{Fore.CYAN}$ {Fore.GREEN}"))
+        messages = str(input(f"{Fore.BLUE}oaic{Fore.CYAN}$ {Fore.WHITE}"))
         print(f"{Fore.RED}")
 
         if messages.find("exit")!=-1:break
