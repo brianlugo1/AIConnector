@@ -1,4 +1,4 @@
-def usage(m):
+def usage(m, ai = ""):
     if m=="h":
         print()
 
@@ -14,13 +14,14 @@ def usage(m):
         print()
 
         print("       chatgpt: ask chatgpt a question")
+        print("       perplexity: ask perplexity a question")
         print("       details: view details about existing conversations")
 
         print()
     elif m=="o":
         print()
 
-        print("Usage: chatgpt [question]")
+        print(f"Usage: {ai} [question]")
 
         print()
     elif m=="d":

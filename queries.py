@@ -4,7 +4,7 @@ import datetime
 
 
 def create_connection():
-    conn = psycopg2.connect("dbname=openai")
+    conn = psycopg2.connect("dbname=ai")
 
     cur = conn.cursor()
 
@@ -14,11 +14,12 @@ def create_connection():
 def create_table(conn, cur):
     cur.execute("CREATE TABLE IF NOT EXISTS conversation (\
         id serial PRIMARY KEY, \
-        question varchar UNIQUE NOT NULL, \
+        question varchar NOT NULL, \
         answer varchar NOT NULL, \
         count integer NOT NULL, \
         day date NOT NULL, \
-        duration real NOT NULL\
+        duration real NOT NULL, \
+        ai varchar NOT NULL \
     );")
 
     conn.commit()
@@ -73,14 +74,14 @@ def select_all_conversations(cur):
     return cur.fetchall()
 
 
-def insert_conversation(conn, cur, question, answer, seconds):
+def insert_conversation(conn, cur, question, answer, seconds, ai):
     cur.execute(f"INSERT INTO conversation (\
             question, answer, count, \
-            day, duration\
+            day, duration, ai\
         ) VALUES (\
             \'{question}\', \'{answer}\', 1, \
             \'{datetime.datetime.now().date()}\', \
-            {seconds}\
+            {seconds}, \'{ai}\'\
         );\
     ")
 
@@ -96,18 +97,20 @@ def delete_conversation(conn, cur, question, answer):
     conn.commit()
 
 
-def search_question(cur, question):
+def search_question(cur, question, ai):
     cur.execute(f"SELECT * FROM conversation \
-        WHERE conversation.question=\'{question}\';\
+        WHERE conversation.question=\'{question}\' \
+        AND conversation.ai=\'{ai}\';\
     ")
 
     return cur.fetchall()
 
 
-def increase_count_of_question(conn, cur, question):
+def increase_count_of_question(conn, cur, question, ai):
     cur.execute(f"UPDATE conversation \
         SET count = count+1 \
-        WHERE conversation.question=\'{question}\';\
+        WHERE conversation.question=\'{question}\' \
+        AND ai=\'{ai}\';\
     ")
 
     conn.commit()

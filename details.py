@@ -95,7 +95,8 @@ def details(cur, m):
 
             print()
 
-        print(f"Time ChatGPT took to respond: {conversation[5]} seconds")
+        # TODO: Capitalize the first letter of conversation[6]
+        print(f"Time {Fore.YELLOW}{conversation[6]}{Fore.GREEN} took to respond: {conversation[5]} seconds")
         print(f"Date asked: {conversation[4]}")
         print(f"Times asked: {conversation[3]}")
 
