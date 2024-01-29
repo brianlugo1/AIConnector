@@ -10,13 +10,8 @@ import os
 
 
 
-def ai_proc():
-    init()
-
-    os.system("clear")
-
+def print_welcome_message():
     print(f"{Fore.CYAN}")
-
     print("------------------------------------------------")
     print("|         Welcome to AIConnector               |")
     print("|                                              |")
@@ -40,13 +35,20 @@ def ai_proc():
     print("------------------------------------------------")
     print()
 
-    conn, cur = create_connection()
 
+def setup():
+    init()
+    os.system("clear")
+    print_welcome_message()
+    conn, cur = create_connection()
     create_table(conn, cur)
+    return conn, cur
+
+
+def ai_proc():
+    conn, cur = setup()
 
     while True:
-        print()
-
         messages = str(input(f"{Fore.BLUE}aicp{Fore.CYAN}$ {Fore.WHITE}"))
 
         if messages.find("exit")==0:break
@@ -97,11 +99,9 @@ def ai_proc():
 
                     else: usage("d")
 
-            else: print(f"{Fore.RED}aicp: command not found: {message}")
+            else: usage(message)
 
-    print(f"{Fore.RED}exit")
-
-    print()
+    usage("e")
 
     cur.close()
     conn.close()
