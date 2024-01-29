@@ -9,7 +9,6 @@ import os
 
 def ai(ai, conn, cur, m):
     init()
-    print(f"{Fore.YELLOW}")
 
     questions=search_question(cur, m, ai)
 
@@ -44,7 +43,7 @@ def ai(ai, conn, cur, m):
 
         toc=time.perf_counter()
 
-        print(f"{ai} responded in: {toc - tic:0.2f} seconds")
+        print(f"{Fore.GREEN}{ai}{Fore.WHITE} responded in: {toc - tic:0.2f} seconds")
 
         print()
 
@@ -80,7 +79,7 @@ def ai(ai, conn, cur, m):
 
             print()
 
-            print(f"Time {Fore.GREEN}{question[6]}{Fore.YELLOW} took to respond: {question[5]} seconds")
+            print(f"Time {Fore.GREEN}{question[6]}{Fore.WHITE} took to respond: {question[5]} seconds")
             print(f"Date asked: {question[4]}")
             print(f"Times asked: {question[3]+1}")
 

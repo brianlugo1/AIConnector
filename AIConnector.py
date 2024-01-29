@@ -9,6 +9,7 @@ from colorama import init, Fore
 import os
 
 
+
 def ai_proc():
     init()
 
@@ -47,8 +48,6 @@ def ai_proc():
         print()
 
         messages = str(input(f"{Fore.BLUE}aicp{Fore.CYAN}$ {Fore.WHITE}"))
-
-        print(f"{Fore.RED}")
 
         if messages.find("exit")==0:break
 
@@ -98,7 +97,7 @@ def ai_proc():
 
                     else: usage("d")
 
-            else: print(f"aicp: command not found: {message}")
+            else: print(f"{Fore.RED}aicp: command not found: {message}")
 
     print(f"{Fore.RED}exit")
 

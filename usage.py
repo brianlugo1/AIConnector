@@ -1,4 +1,12 @@
+from colorama import init, Fore
+
+
+
 def usage(m, ai = ""):
+    init()
+
+    print(f"{Fore.RED}")
+
     if m=="h":
         print()
 

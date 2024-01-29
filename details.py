@@ -7,7 +7,6 @@ import textwrap
 
 def details(cur, m):
     init()
-    print(f"{Fore.GREEN}")
 
     conversations=[]
 
@@ -45,7 +44,6 @@ def details(cur, m):
         d=m.split("-")
 
         if m=="" or len(d) != 3 or len(d[0]) != 4 or len(d[1]) != 2 or len(d[2]) != 2:
-            print(f"{Fore.RED}")
             usage("dd")
             return
 
@@ -95,7 +93,7 @@ def details(cur, m):
 
             print()
 
-        print(f"Time {Fore.YELLOW}{conversation[6]}{Fore.GREEN} took to respond: {conversation[5]} seconds")
+        print(f"Time {Fore.GREEN}{conversation[6]}{Fore.WHITE} took to respond: {conversation[5]} seconds")
         print(f"Date asked: {conversation[4]}")
         print(f"Times asked: {conversation[3]}")
 
