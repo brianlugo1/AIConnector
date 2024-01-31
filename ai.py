@@ -10,7 +10,11 @@ import os
 def ai(ai, conn, cur, m):
     init()
 
-    questions=search_question(cur, m, ai)
+    questions=search_question(
+        cur,
+        m.replace("\'", "\\\'").replace("\"", "\\\""),
+        ai
+    )
 
     if len(questions)==0:
         tic=time.perf_counter()
@@ -52,11 +56,10 @@ def ai(ai, conn, cur, m):
 
         print()
 
-        insert_conversation(
-            conn, cur, m,
-            completion.choices[0].message.content.replace("\'", "\""),
-            f"{toc - tic:0.2f}", ai
-        )
+        q=m.replace("\'", "\\\'").replace("\"", "\\\"")
+        a=completion.choices[0].message.content.replace("\'", "\\\'").replace("\"", "\\\"")
+
+        insert_conversation(conn, cur, q, a, f"{toc - tic:0.2f}", ai)
 
     else:
         print()
@@ -68,7 +71,7 @@ def ai(ai, conn, cur, m):
         print("--------------------------------------------------")
 
         for question in questions:
-            answer=question[2].replace("\"", "\'")
+            answer=question[2]
 
             print('Stored answer:')
 
@@ -86,5 +89,7 @@ def ai(ai, conn, cur, m):
         print("--------------------------------------------------")
 
         print()
+
+        m=m.replace("\'", "\\\'").replace("\"", "\\\"")
 
         increase_count_of_question(conn, cur, m, ai)

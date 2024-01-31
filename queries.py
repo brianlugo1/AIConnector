@@ -79,7 +79,7 @@ def insert_conversation(conn, cur, question, answer, seconds, ai):
             question, answer, count, \
             day, duration, ai\
         ) VALUES (\
-            \'{question}\', \'{answer}\', 1, \
+            E\'{question}\', E\'{answer}\', 1, \
             \'{datetime.datetime.now().date()}\', \
             {seconds}, \'{ai}\'\
         );\
@@ -90,8 +90,8 @@ def insert_conversation(conn, cur, question, answer, seconds, ai):
 
 def delete_conversation(conn, cur, question, answer):
     cur.execute(f"DELETE FROM conversation \
-        WHERE conversation.question=\'{question}\' \
-        AND conversation.answer=\'{answer}\';\
+        WHERE conversation.question=E\'{question}\' \
+        AND conversation.answer=E\'{answer}\';\
     ")
 
     conn.commit()
@@ -99,7 +99,7 @@ def delete_conversation(conn, cur, question, answer):
 
 def search_question(cur, question, ai):
     cur.execute(f"SELECT * FROM conversation \
-        WHERE conversation.question=\'{question}\' \
+        WHERE conversation.question=E\'{question}\' \
         AND conversation.ai=\'{ai}\';\
     ")
 
@@ -109,7 +109,7 @@ def search_question(cur, question, ai):
 def increase_count_of_question(conn, cur, question, ai):
     cur.execute(f"UPDATE conversation \
         SET count = count+1 \
-        WHERE conversation.question=\'{question}\' \
+        WHERE conversation.question=E\'{question}\' \
         AND ai=\'{ai}\';\
     ")
 
