@@ -224,7 +224,7 @@ def aicp():
             elif min_dist==4:
                 usage(m="", cmd_n_f=f"{processed_cmd}")
             else:
-                usage(m="p", cmd_n_f=f"{probable_cmd}")
+                usage(m="p", probable_cmd=f"{probable_cmd}")
 
         if e:
             usage(m="e")
