@@ -86,7 +86,7 @@ def details(cur, m):
         year_month_day=date.split("-")
 
         if len(year_month_day) != 3 or len(year_month_day[0]) != 4 or len(year_month_day[1]) != 2 or len(year_month_day[2]) != 2:
-            usage("dd")
+            usage(m="dd")
             return
 
         conversations=select_conversations_give_date(cur, date)

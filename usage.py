@@ -47,7 +47,11 @@ def file_not_found(m):
     print(f"{Fore.RED}aicp: no such file or directory: {m}")
 
 
-def usage(m, ai = "", file=""):
+def probable_command(m):
+    print(f"aicp: did you mean to type {m}?")
+
+
+def usage(m="", ai = "", f_n_f="", probable_cmd="", cmd_n_f=""):
     init()
 
     if m=="h":
@@ -61,6 +65,8 @@ def usage(m, ai = "", file=""):
     elif m=="e":
         exit_message()
     elif m=="f":
-        file_not_found(file)
+        file_not_found(f_n_f)
+    elif m=="p":
+        probable_command(probable_cmd)
     else:
-        command_not_found(m)
+        command_not_found(cmd_n_f)

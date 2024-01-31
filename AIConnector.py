@@ -66,48 +66,78 @@ def split_cmd(cmds):
 
 def process_ai_cmd(conn, cur, msg, ai_cmd):
     if msg=="":
-        usage("o", ai_cmd)
+        usage(m="o", ai=ai_cmd)
         return
 
     ai(ai_cmd, conn, cur, msg.strip())
 
 
 def process_details_cmd(cur, cmd):
-    vaild_details_flag=False
+    if cmd=="":
+        usage(m="d")
+        return
 
-    process_d_cmd=""
+    if cmd.isnumeric():
+        details(cur, cmd)
+        return
 
-    if not cmd.isnumeric():
-        process_d_cmd=cmd[:1].strip()
+    processed_cmd=cmd.split(" ")[0].lower()
 
-    if process_d_cmd=="t":
-        vaild_details_flag=True
-    elif process_d_cmd=="y":
-        vaild_details_flag=True
-    elif process_d_cmd=="a":
-        vaild_details_flag=True
-    elif process_d_cmd=="m":
-        vaild_details_flag=True
-    elif process_d_cmd=="l":
-        vaild_details_flag=True
-    elif process_d_cmd=="s":
-        vaild_details_flag=True
-    elif cmd.isnumeric():
-        vaild_details_flag=True
-    elif cmd.startswith("date"):
-        vaild_details_flag=True
-        cmd=cmd[4:]
-        cmd="d"+cmd
-    elif cmd.startswith("d"):
-        vaild_details_flag=True
+    if len(processed_cmd) == 1:
+        stored_cmds=[
+            "t",
+            "y",
+            "a",
+            "m",
+            "l",
+            "s",
+            "d",
+        ]
 
-    if vaild_details_flag:
-        if cmd.isnumeric() or cmd.startswith("d"):
-            details(cur, cmd)
-        else:
-            details(cur, cmd[:1])
+        for s_cmd in stored_cmds:
+            if distance(s_cmd, processed_cmd) == 0:
+                details(cur, cmd)
+                return
+
+        usage(m="d")
+
     else:
-        usage("d")
+        stored_cmds=[
+            "today",
+            "yesterday",
+            "all",
+            "most",
+            "longest",
+            "shortest",
+            "date",
+        ]
+
+        min_dist=4
+        process_d_cmd=""
+
+        for s_cmd in stored_cmds:
+            dist=distance(cmd, s_cmd)
+
+            if dist <= min_dist:
+                min_dist=dist
+                process_d_cmd=s_cmd
+
+        if min_dist == 0:
+            if processed_cmd == "date":
+                processed_cmd=processed_cmd[:len(processed_cmd)]
+                processed_cmd="d" + processed_cmd
+                details(cur, processed_cmd)
+                return
+
+            details(cur, processed_cmd[:1])
+            return
+
+        if min_dist < 4:
+            usage(m="p", probable_cmd=f"{process_d_cmd}")
+            return
+
+        usage(m="d")
+        return
 
 
 def aicp():
@@ -137,7 +167,7 @@ def aicp():
             if processed_cmd=="":
                 continue
             elif processed_cmd=="h":
-                usage("h")
+                usage(m="h")
                 continue
             elif processed_cmd=="c":
                 process_ai_cmd(conn, cur, cmd[1:].strip(), GPT)
@@ -153,7 +183,7 @@ def aicp():
                     os.chdir(cmd[3:].strip())
                     continue
                 except:
-                    usage("f", "", cmd[3:].strip())
+                    usage(m="f", f_n_f=cmd[3:].strip())
                     continue
             elif processed_cmd=="ls":
                 os.system("ls")
@@ -161,6 +191,10 @@ def aicp():
             elif processed_cmd=="pwd":
                 os.system("pwd")
                 continue
+
+            if len(processed_cmd) < 4:
+                usage(m="", cmd_n_f=processed_cmd)
+                break
 
             min_dist=4
             probable_cmd=""
@@ -180,7 +214,7 @@ def aicp():
                 if probable_cmd=="clear":
                     os.system("clear")
                 elif probable_cmd=="help":
-                    usage("h")
+                    usage(m="h")
                 elif probable_cmd==GPT:
                     process_ai_cmd(conn, cur, cmd[GPT_LEN:].strip(), GPT)
                 elif probable_cmd==PER:
@@ -188,12 +222,12 @@ def aicp():
                 elif probable_cmd==DTS:
                     process_details_cmd(cur, cmd[DTS_LEN:].strip())
             elif min_dist==4:
-                print(f"aicp: command not found: {processed_cmd}")
+                usage(m="", cmd_n_f=f"{processed_cmd}")
             else:
-                print(f"aicp: did you mean to type {probable_cmd}?")
+                usage(m="p", cmd_n_f=f"{probable_cmd}")
 
         if e:
-            usage("e")
+            usage(m="e")
             break
 
 aicp()
