@@ -8,6 +8,8 @@
 [x] Restructure services into seperate .py files and import them!
 [x] Change the color of stdout!
 [x] Added the feature to ask Perplexity!
+[x] Fix bug for misspelled chatgpt and perplexity using Levenshtein python library!
+[x] Implement Levenshtein python library for command likely misspelled with main commands!
 
 [] Save money by removing unnecessary tokens in users' messages sent.
 
@@ -36,3 +38,5 @@
 [] Add feature that when question asked is stored, prompt to use stored answer or ask chatgpt again!
 [] Filter by ai asked!
 [] Keep an array of asked questions for both Chatgpt and Perplexity to have the context when asking questions!
+
+[x] Implement Levenshtein python library for command likely misspelled for details flags!

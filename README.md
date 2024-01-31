@@ -38,6 +38,9 @@ https://docs.python.org/3/library/textwrap.html
 Colorama Documentation:
 https://pypi.org/project/colorama/
 
+Levenshtein Python Library Documentation:
+https://pypi.org/project/python-Levenshtein/
+
 
 Follow the instructions for downloading postgres:
 https://postgresapp.com/downloads.html
