@@ -39,4 +39,4 @@
 [] Filter by ai asked!
 [] Keep an array of asked questions for both Chatgpt and Perplexity to have the context when asking questions!
 
-[x] Implement Levenshtein python library for command likely misspelled for details flags!
+[] Implement Levenshtein python library for command likely misspelled for details flags!
