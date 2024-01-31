@@ -85,7 +85,19 @@ def details(cur, m):
 
         year_month_day=date.split("-")
 
-        if len(year_month_day) != 3 or len(year_month_day[0]) != 4 or len(year_month_day[1]) != 2 or len(year_month_day[2]) != 2:
+        if len(year_month_day) != 3:
+            usage(m="dd")
+            return
+
+        if len(year_month_day[0]) != 4:
+            usage(m="dd")
+            return
+
+        if len(year_month_day[1]) != 2:
+            usage(m="dd")
+            return
+
+        if len(year_month_day[2]) != 2:
             usage(m="dd")
             return
 
