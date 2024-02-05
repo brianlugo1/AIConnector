@@ -12,6 +12,7 @@
 [x] Implement Levenshtein python library for command likely misspelled with main commands!
 [x] Implement Levenshtein python library for command likely misspelled for details flags!
 [x] Fixed error with not being able to insert single and double quotes in questions and answers!
+[x] Add tab for autocomplete commands and flags.
 
 [] Save money by removing unnecessary tokens in users' messages sent.
 
@@ -25,11 +26,8 @@
 [] Create a dictionary with storing!
 
 [] Use texplorer to search words!
-[] PrefixTrie for autocomplete!
 
 [] Add length of a question and answer
-
-[] Organize my notes? Markdown
 
 [] Export feature -> create a log file of conversations on a given day!
     - Export to CSV
@@ -37,6 +35,7 @@
     - Export to Markdown
 
 [] Add feature that when question asked is stored, prompt to use stored answer or ask chatgpt again!
+
 [] Filter by ai asked!
+
 [] Keep an array of asked questions for both Chatgpt and Perplexity to have the context when asking questions!
-[] Add tab for autocomplete commands and flags.

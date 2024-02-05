@@ -4,11 +4,14 @@ import datetime
 
 
 def create_connection():
-    conn = psycopg2.connect("dbname=ai")
+    try:
+        conn = psycopg2.connect("dbname=ai")
 
-    cur = conn.cursor()
+        cur = conn.cursor()
 
-    return conn, cur
+        return conn, cur
+    except:
+        return None, None
 
 
 def create_table(conn, cur):
