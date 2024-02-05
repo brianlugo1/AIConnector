@@ -1,16 +1,17 @@
 # AIConnector
 
 The purpose of this project is to learn about interfacing with
-Chatgpt and Perplexity's API using the openai python library
-and using postgresql as the database to store conversations
-using the postgresql python library! The project not only sends
-questions to ChatGPT or Perplexity, but also stores asked
-questions and returned responses. Additionally, extra
-information is stored about when the question was asked and
-how many times the question has been asked overall. If a
-question has been asked already, the stored response is
-printed to save unnecessary api calls to Chatgpt and
-Perplexity's API.
+Chatgpt and Perplexity's API using the openai python library and
+Llama2 using the ollama python library. The postgresql python
+library will be used to connect to a postgresql server hosting
+our database to store conversations and analytics. The project
+not only sends questions to ChatGPT, Perplexity or Llama2, but
+also stores asked questions and returned responses. Additionally,
+extra information is stored about when the question was asked
+and how many times the question has been asked overall. If a
+question has been asked already, the stored response is printed
+to save unnecessary api calls to Chatgpt and Perplexity's API and
+Llama2!
 
 
 
