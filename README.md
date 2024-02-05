@@ -12,7 +12,29 @@ question has been asked already, the stored response is
 printed to save unnecessary api calls to Chatgpt and
 Perplexity's API.
 
+
+
+UPDATE: Support for interfacing with a local Llama2 model running
+with Ollama in a Docker Container has just been added!
+
+Follow LLama-2-Crime-Analysis's README.md for instructions on running a
+local instance of the Llama2 model using Ollama in Docker:
+https://github.com/brianlugo1/Llama-2-Crime-Analysis?tab=readme-ov-file
+
+The assumed open port for which `ai.py` will try to connect to for the
+Llama2 model is 11434. If changed, you will need to update the host
+url for your local Llama2 model in `ai.py` to whatever port you have
+opened in your Docker Container running your Llama2 model using Ollama.
+
+If you wish to not run a local Llama2 model, you will need to change
+the host url in `ai.py` and add an api_key to `.env`. Import the api_key
+from your `.env` in `ai.py` to allow for connecting to a hosted Llama2
+model when using `l` or `llama` in aicp.
+
+
+
 DISCLAIMER: Every api call made is charged by Chatgpt and Perplexity!
+
 
 OpenAI Python Library Documentation:
 https://pypi.org/project/openai/
@@ -25,6 +47,15 @@ https://blog.perplexity.ai/blog/introducing-pplx-api
 
 Link for Available Models for Perplexity:
 https://docs.perplexity.ai/docs/model-cards
+
+LLama Python Library Documentation:
+https://pypi.org/project/ollama/
+
+Link for running Ollama in a Docker Container:
+https://ollama.ai/blog/ollama-is-now-available-as-an-official-docker-image
+
+Link for Available Models for Llama:
+https://pypi.org/project/ollama/
 
 Datetime Documentation:
 https://docs.python.org/3/library/datetime.html

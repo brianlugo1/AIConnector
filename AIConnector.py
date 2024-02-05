@@ -16,6 +16,8 @@ GPT = "chatgpt"
 GPT_LEN = len(GPT)
 PER = "perplexity"
 PER_LEN = len(PER)
+LMA = "llama"
+LMA_LEN = len(LMA)
 DTS = "details"
 DTS_LEN = len(DTS)
 
@@ -35,6 +37,9 @@ def print_welcome_message():
     print("|                                              |")
     print("|   To ask Perplexity a question simply type:  |")
     print(f"|       {PER} or p                        |")
+    print("|                                              |")
+    print("|   To ask Llama a question simply type:       |")
+    print(f"|       {LMA} or l                             |")
     print("|                                              |")
     print("|   To view a detailed report type:            |")
     print(f"|       {DTS} or d                           |")
@@ -156,6 +161,7 @@ def exec_cmd(conn, cur, cmds):
         GPT,
         PER,
         DTS,
+        LMA
     ]
 
     for cmd in cmds:
@@ -173,6 +179,9 @@ def exec_cmd(conn, cur, cmds):
             continue
         elif processed_cmd=="p":
             process_ai_cmd(conn, cur, cmd[1:].strip(), PER)
+            continue
+        elif processed_cmd=="l":
+            process_ai_cmd(conn, cur, cmd[1:].strip(), LMA)
             continue
         elif processed_cmd=="d":
             process_details_cmd(cur, cmd[1:].strip())
@@ -218,6 +227,8 @@ def exec_cmd(conn, cur, cmds):
                 process_ai_cmd(conn, cur, cmd[GPT_LEN:].strip(), GPT)
             elif probable_cmd==PER:
                 process_ai_cmd(conn, cur, cmd[PER_LEN:].strip(), PER)
+            elif probable_cmd==LMA:
+                process_ai_cmd(conn, cur, cmd[LMA_LEN:].strip(), LMA)
             elif probable_cmd==DTS:
                 process_details_cmd(cur, cmd[DTS_LEN:].strip())
         elif min_dist==4:
@@ -264,6 +275,7 @@ class MyCompleter(object):
                 GPT,
                 PER,
                 DTS,
+                LMA
             ]
 
             stored_flags={

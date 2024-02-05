@@ -1,5 +1,6 @@
 from colorama import init, Fore
 from openai import OpenAI
+from ollama import Client
 from queries import *
 import textwrap
 import time
@@ -30,20 +31,37 @@ def ai(ai, conn, cur, m):
             # Available Models: Mistral 7B, Llama 13B, Code Llama 34B, Llama 70B
             model="mistral-7b-instruct"
 
-        client = OpenAI(
-            api_key=os.environ.get(api_key),
-            base_url=base_url
-        )
+        client = []
+        completion = []
 
-        completion = client.chat.completions.create(
-            model=model,
-            messages=[
-                {
-                    'role': 'user',
-                    'content': m,
-                }
-            ],
-        )
+        if ai=="llama":
+            client = Client(host="http://127.0.0.1:11434")
+
+            completion = client.chat(
+                model="llama2",
+                messages=[
+                    {
+                        'role': 'user',
+                        'content': m,
+                    }
+                ]
+            )
+
+        else:
+            client = OpenAI(
+                api_key=os.environ.get(api_key),
+                base_url=base_url
+            )
+
+            completion = client.chat.completions.create(
+                model=model,
+                messages=[
+                    {
+                        'role': 'user',
+                        'content': m,
+                    }
+                ],
+            )
 
         toc=time.perf_counter()
 
@@ -51,13 +69,23 @@ def ai(ai, conn, cur, m):
 
         print()
 
-        for line in textwrap.wrap(completion.choices[0].message.content):
-            print(line)
+        if ai == "llama":
+            for line in textwrap.wrap(completion["message"]["content"]):
+                print(line.strip())
+        else:
+            for line in textwrap.wrap(completion.choices[0].message.content):
+                print(line)
 
         print()
 
         q=m.replace("\'", "\\\'").replace("\"", "\\\"")
-        a=completion.choices[0].message.content.replace("\'", "\\\'").replace("\"", "\\\"")
+
+        a=""
+
+        if ai == "llama":
+            a=completion["message"]["content"].replace("\'", "\\\'").replace("\"", "\\\"")
+        else:
+            a=completion.choices[0].message.content.replace("\'", "\\\'").replace("\"", "\\\"")
 
         insert_conversation(conn, cur, q, a, f"{toc - tic:0.2f}", ai)
 
