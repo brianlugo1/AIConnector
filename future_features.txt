@@ -13,6 +13,7 @@
 [x] Implement Levenshtein python library for command likely misspelled for details flags!
 [x] Fixed error with not being able to insert single and double quotes in questions and answers!
 [x] Add tab for autocomplete commands and flags.
+[x] Add Llama local client support!
 
 [] Save money by removing unnecessary tokens in users' messages sent.
 
@@ -41,5 +42,3 @@
 [] Keep an array of asked questions for both Chatgpt and Perplexity to have the context when asking questions!
 
 [] Add logic to autocorrect commands and flags!
-
-[] Add Llama local client!
