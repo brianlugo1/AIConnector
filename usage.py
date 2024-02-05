@@ -10,6 +10,7 @@ def help_usage():
     print("             exit: exit OpenAIConnector\n")
     print("    c,    chatgpt: ask chatgpt a question")
     print("    p, perplexity: ask perplexity a question")
+    print("    l,      llama: ask llama a question")
     print("    d,    details: view details about existing conversations")
 
 
