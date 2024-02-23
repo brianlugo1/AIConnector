@@ -14,7 +14,7 @@ from AutoCompleter import MyCompleter
 def aicp():
     conn, cur=setup()
 
-    if conn == None and cur == None:
+    if conn==None and cur==None:
         print("An error occurred connecting to the PostgreSQL server. Is the PostgreSQL server running?")
         return
 

@@ -1,121 +1,124 @@
 import textwrap
 from queries import *
 from usage import usage
+from Constants import *
 from colorama import Fore
 
 
 
 def format_conversation(conversation):
-    question=conversation[1]
-    answer=conversation[2]
-    ai=conversation[6]
-
     print("----------------------------------------------------------------------")
-    print(f"Question: {question}")
 
-    print(f"\n{Fore.GREEN}{ai}{Fore.WHITE}:")
+    print(f"Question: {conversation[1]}")
 
-    for line in textwrap.wrap(answer.replace("\"", "\'"), width=70):
+    print(f"\n{Fore.GREEN}{conversation[6]}{Fore.WHITE}:")
+
+    for line in textwrap.wrap(conversation[2].replace("\"", "\'"), width=70):
         print(f"{line}")
 
     print("----------------------------------------------------------------------")
 
 
 def format_conversations(conversations):
-    width=13
-
-    ID="ID".center(width, ' ')
-    TIME="Times Asked".center(width, ' ')
-    DATE="Date Asked".center(width, ' ')
-    TIMEWAITED="Time Waited".center(width, ' ')
-    AI="AI".center(width, ' ')
-
     print("-----------------------------------------------------------------------")
+
     print(f"|{ID}|{TIME}|{DATE}|{TIMEWAITED}|{AI}|")
+
     print("-----------------------------------------------------------------------")
 
     for conversation in conversations:
         id=str(conversation[0]).center(width, ' ')
+
         times_asked=str(conversation[3]).center(width, ' ')
+
         date_asked=str(conversation[4]).center(width, ' ')
+
         time_waited=str(conversation[5]).center(width, ' ')
+
         ai=str(conversation[6]).center(width, ' ')
 
         print(f"|{id}|{date_asked}|{times_asked}|{time_waited}|{ai}|")
+
     print("-----------------------------------------------------------------------")
 
 
-def details(cur, m):
+def details(cur, flag):
     conversations=[]
 
     title={
-        "t": "Here is a report of today's conversations:",
-        "y": "Here is a report of yesterday's conversations:",
-        "a": "Here is a report of all conversations:",
-        "m": "Here is the most asked question:",
-        "l": "Here is the question that took the longest:",
-        "s": "Here is the question that took the shortest:",
-        "i": f"Here is the conversation with the id [{m}]",
-        "d": f"Here is the conversations with the given date [{m[1:].strip()}]",
+        TDY[0]: f"Here is a report of {TDY}'s conversations:",
+        YTD[0]: f"Here is a report of {YTD}'s conversations:",
+        ALL[0]: f"Here is a report of {ALL} conversations:",
+        MST[0]: f"Here is the {MST} asked question:",
+        LGT[0]: f"Here is the question that took the {LGT}:",
+        SRT[0]: f"Here is the question that took the {SRT}:",
+        "i": f"Here is the conversation with the id [{flag}]",
+        DTE[0]: f"Here is the conversations with the given {DTE} [{flag[1:].strip()}]",
     }
 
-    if m=="t":
-        conversations=select_questions_asked(cur, "t")
-    elif m=="y":
-        conversations=select_questions_asked(cur, "y")
-    elif m=="a":
-        conversations=select_questions_asked(cur, "a")
-    elif m=="m":
+    if flag==TDY[0]:
+        conversations=select_questions_asked(cur, TDY[0])
+
+    elif flag==YTD[0]:
+        conversations=select_questions_asked(cur, YTD[0])
+
+    elif flag==ALL[0]:
+        conversations=select_questions_asked(cur, ALL[0])
+
+    elif flag==MST[0]:
         conversations=select_most_asked_question(cur)
-    elif m=="l":
+
+    elif flag==LGT[0]:
         conversations=select_longest_question_waited_for(cur)
-    elif m=="s":
+
+    elif flag==SRT[0]:
         conversations=select_shortest_question_waited_for(cur)
-    elif m.isnumeric():
-        conversations=select_conversation_given_id(cur, m)
 
-    elif m.startswith("d"):
-        date=""
-        date=m[1:].strip()
+    elif flag.isnumeric():
+        conversations=select_conversation_given_id(cur, flag)
 
-        m="d"
+    elif flag.startswith(DTE[0]):
+        date=flag[1:].strip()
+
+        flag=DTE[0]
 
         year_month_day=date.split("-")
 
         if len(year_month_day) != 3:
-            usage(m="dd")
+            usage(usage=DTE)
             return
 
         if len(year_month_day[0]) != 4:
-            usage(m="dd")
+            usage(usage=DTE)
             return
 
         if len(year_month_day[1]) != 2:
-            usage(m="dd")
+            usage(usage=DTE)
             return
 
         if len(year_month_day[2]) != 2:
-            usage(m="dd")
+            usage(usage=DTE)
             return
 
         conversations=select_conversations_give_date(cur, date)
 
     id=""
 
-    if m.isnumeric():
-        id=m
-        m="i"
+    if flag.isnumeric():
+        id=flag
 
-    print(title[m])
+        flag="i"
+
+    print(title[flag])
 
     if len(conversations)==0:
-        if m.isnumeric():
+        if flag.isnumeric():
             print(f"No Conversation with id [{id}]")
 
         else:
             print("No Conversations to show!")
 
-    elif len(conversations)==1 and m=="i":
+    elif len(conversations)==1 and flag=="i":
         format_conversation(conversations[0])
 
     else:

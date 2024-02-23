@@ -1,17 +1,20 @@
+from Constants import *
 from colorama import Fore
 
 
 
 def help_usage():
     print(f"{Fore.RED}Usage: [options]\n")
+
     print("Options:")
-    print("    h,       help: display this message")
-    print("            clear: clear the console")
-    print("             exit: exit OpenAIConnector\n")
-    print("    c,    chatgpt: ask chatgpt a question")
-    print("    p, perplexity: ask perplexity a question")
-    print("    l,      llama: ask llama a question")
-    print("    d,    details: view details about existing conversations")
+
+    print(f"    {HLP[0]},       {HLP}: display this message")
+    print(f"            {CLR}: clear the console")
+    print(f"             {EXT}: exit OpenAIConnector\n")
+    print(f"    {GPT[0]},    {GPT}: ask chatgpt a question")
+    print(f"    {PER[0]}, {PER}: ask perplexity a question")
+    print(f"    {LMA[0]},      {LMA}: ask llama a question")
+    print(f"    {DTS[0]},    {DTS}: view details about existing conversations")
 
 
 def ai_usage(ai):
@@ -19,53 +22,62 @@ def ai_usage(ai):
 
 
 def details_usage():
-    print(f"{Fore.RED}Usage: details d [options]\n")
+    print(f"{Fore.RED}Usage: {DTS} {DTS[0]} [options]\n")
+
     print("Options:")
-    print("    t,       today: display a report for today's conversations")
-    print("    y,   yesterday: display a report for yesterday's conversations")
-    print("    a,         all: display a report for all conversations")
-    print("    m,        most: display a report for the most asked conversation")
-    print("    l,     longest: display a report for the conversation that took the longest")
-    print("    s,    shortest: display a report for the conversation that took the shortest")
+
+    print(f"    {TDY[0]},       {TDY}: display a report for {TDY}'s conversations")
+    print(f"    {YTD[0]},   {YTD}: display a report for {YTD}'s conversations")
+    print(f"    {ALL[0]},         {ALL}: display a report for {ALL} conversations")
+    print(f"    {MST[0]},        {MST}: display a report for the {MST} asked conversation")
+    print(f"    {LGT[0]},     {LGT}: display a report for the conversation that took the {LGT}")
+    print(f"    {SRT[0]},    {SRT}: display a report for the conversation that took the {SRT}")
     print("              [id]: display the report for the conversation with the given id")
-    print("    d, date [date]: display the report for the conversation with the given date")
+    print(f"    {DTE[0]}, {DTE} [{DTE}]: display the report for the conversation with the given {DTE}")
     print("                     (expected format: YYYY-MM-DD)")
 
 
 def details_date_usage():
-    print(f"{Fore.RED}Usage: details date d [YYYY-DD-MM]")
+    print(f"{Fore.RED}Usage: {DTS} {DTE} {DTE[0]} [YYYY-DD-MM]")
 
 
 def exit_message():
     print(f"{Fore.RED}exit")
 
 
-def command_not_found(m):
+def command_not_found_usage(m):
     print(f"{Fore.RED}aicp: command not found: {m}")
 
 
-def file_not_found(m):
+def file_not_found_usage(m):
     print(f"{Fore.RED}aicp: no such file or directory: {m}")
 
 
-def probable_command(m):
+def probable_command_usage(m):
     print(f"aicp: did you mean to type {m}?")
 
 
-def usage(m="", ai = "", f_n_f="", probable_cmd="", cmd_n_f=""):
-    if m=="h":
+def usage(usage="", ai="", file_not_found="", probable_command="", command_not_found=""):
+    if usage==HLP:
         help_usage()
-    elif m=="o":
+
+    elif usage==AI:
         ai_usage(ai)
-    elif m=="d":
+
+    elif usage==DTS:
         details_usage()
-    elif m=="dd":
+
+    elif usage==DTE:
         details_date_usage()
-    elif m=="e":
+
+    elif usage==EXT:
         exit_message()
-    elif m=="f":
-        file_not_found(f_n_f)
-    elif m=="p":
-        probable_command(probable_cmd)
+
+    elif usage==FLE:
+        file_not_found_usage(file_not_found)
+
+    elif usage==PRB:
+        probable_command_usage(probable_command)
+
     else:
-        command_not_found(cmd_n_f)
+        command_not_found_usage(command_not_found)

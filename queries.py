@@ -1,13 +1,14 @@
 import psycopg2
 import datetime
+from Constants import *
 
 
 
 def create_connection():
     try:
-        conn = psycopg2.connect("dbname=ai")
+        conn=psycopg2.connect("dbname=ai")
 
-        cur = conn.cursor()
+        cur=conn.cursor()
 
         return conn, cur
     except:
@@ -57,9 +58,7 @@ def select_table_columns(cur):
 
 
 def print_table_details(cur):
-    print("Details about Table:")
-
-    print()
+    print("Details about Table:\n")
 
     print("Name:   ", select_table_names(cur)[0][1])
 
@@ -111,7 +110,7 @@ def search_question(cur, question, ai):
 
 def increase_count_of_question(conn, cur, question, ai):
     cur.execute(f"UPDATE conversation \
-        SET count = count+1 \
+        SET count=count+1 \
         WHERE conversation.question=E\'{question}\' \
         AND ai=\'{ai}\';\
     ")
@@ -122,14 +121,16 @@ def increase_count_of_question(conn, cur, question, ai):
 def select_questions_asked(cur, d):
     day=""
 
-    if d=="t": day=datetime.datetime.now().date()
+    if d==TDY[0]:
+        day=datetime.datetime.now().date()
 
-    elif d=="y":
+    elif d==YTD[0]:
         day=datetime.datetime.now().date().replace(
             day=datetime.datetime.now().date().day-1
         )
 
-    elif d=="a": return select_all_conversations(cur)
+    elif d==ALL[0]:
+        return select_all_conversations(cur)
 
     cur.execute(f"SELECT * FROM conversation \
         WHERE conversation.day=\'{day}\';\

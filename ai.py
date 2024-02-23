@@ -1,19 +1,17 @@
-from colorama import init, Fore
-from openai import OpenAI
-from ollama import Client
-from queries import *
-import textwrap
-import time
 import os
+import time
+import textwrap
+from queries import *
+from ollama import Client
+from openai import OpenAI
+from colorama import Fore
 
 
 
-def ai(ai, conn, cur, m):
-    init()
-
+def ai(ai, conn, cur, msg):
     questions=search_question(
         cur,
-        m.replace("\'", "\\\'").replace("\"", "\\\""),
+        msg.replace("\'", "\\\'").replace("\"", "\\\""),
         ai
     )
 
@@ -21,55 +19,57 @@ def ai(ai, conn, cur, m):
         tic=time.perf_counter()
 
         api_key="CHATGPT_API_KEY"
+
         base_url=None
+
         model="gpt-3.5-turbo"
 
-        if ai=="perplexity":
+        if ai==PER:
             api_key="PERPLEXITY_API_KEY"
+
             base_url="https://api.perplexity.ai"
 
             # Available Models: Mistral 7B, Llama 13B, Code Llama 34B, Llama 70B
             model="mistral-7b-instruct"
 
-        client = []
-        completion = []
+        client=[]
 
-        if ai=="llama":
-            client = Client(host="http://127.0.0.1:11434")
+        completion=[]
 
-            completion = client.chat(
-                model="llama2",
+        if ai==LMA:
+            client=Client(host="http://127.0.0.1:11434")
+
+            completion=client.chat(
+                model=f"{LMA}2",
                 messages=[
                     {
                         'role': 'user',
-                        'content': m,
+                        'content': msg,
                     }
                 ]
             )
 
         else:
-            client = OpenAI(
+            client=OpenAI(
                 api_key=os.environ.get(api_key),
                 base_url=base_url
             )
 
-            completion = client.chat.completions.create(
+            completion=client.chat.completions.create(
                 model=model,
                 messages=[
                     {
                         'role': 'user',
-                        'content': m,
+                        'content': msg,
                     }
                 ],
             )
 
         toc=time.perf_counter()
 
-        print(f"{Fore.GREEN}{ai}{Fore.WHITE} responded in: {toc - tic:0.2f} seconds")
+        print(f"{Fore.GREEN}{ai}{Fore.WHITE} responded in: {toc - tic:0.2f} seconds\n")
 
-        print()
-
-        if ai == "llama":
+        if ai==LMA:
             for line in textwrap.wrap(completion["message"]["content"]):
                 print(line.strip())
         else:
@@ -78,46 +78,34 @@ def ai(ai, conn, cur, m):
 
         print()
 
-        q=m.replace("\'", "\\\'").replace("\"", "\\\"")
+        question=msg.replace("\'", "\\\'").replace("\"", "\\\"")
 
-        a=""
+        answer=""
 
-        if ai == "llama":
-            a=completion["message"]["content"].replace("\'", "\\\'").replace("\"", "\\\"")
+        if ai==LMA:
+            answer=completion["message"]["content"].replace("\'", "\\\'").replace("\"", "\\\"")
         else:
-            a=completion.choices[0].message.content.replace("\'", "\\\'").replace("\"", "\\\"")
+            answer=completion.choices[0].message.content.replace("\'", "\\\'").replace("\"", "\\\"")
 
-        insert_conversation(conn, cur, q, a, f"{toc - tic:0.2f}", ai)
+        insert_conversation(conn, cur, question, answer, f"{toc - tic:0.2f}", ai)
 
     else:
-        print()
-
-        print("Question already asked:")
-
-        print()
+        print("\nQuestion already asked:\n")
 
         print("--------------------------------------------------")
 
         for question in questions:
-            answer=question[2]
+            print('Stored answer:\n')
 
-            print('Stored answer:')
-
-            print()
-
-            for line in textwrap.wrap(answer):
+            for line in textwrap.wrap(question[2]):
                 print(f"{line}")
 
-            print()
-
-            print(f"Time {Fore.GREEN}{question[6]}{Fore.WHITE} took to respond: {question[5]} seconds")
+            print(f"\nTime {Fore.GREEN}{question[6]}{Fore.WHITE} took to respond: {question[5]} seconds")
             print(f"Date asked: {question[4]}")
             print(f"Times asked: {question[3]+1}")
 
-        print("--------------------------------------------------")
+        print("--------------------------------------------------\n")
 
-        print()
+        msg=msg.replace("\'", "\\\'").replace("\"", "\\\"")
 
-        m=m.replace("\'", "\\\'").replace("\"", "\\\"")
-
-        increase_count_of_question(conn, cur, m, ai)
+        increase_count_of_question(conn, cur, msg, ai)
