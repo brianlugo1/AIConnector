@@ -1,19 +1,19 @@
 import readline
 
-from colorama import init, Fore
-init()
-
-from AutoCompleter import MyCompleter
-
 from utilities import (
     setup,
-    split_cmd,
+    split_cmds,
     exec_cmd
 )
+
+from colorama import init, Fore
+from AutoCompleter import MyCompleter
 
 
 
 def aicp():
+    init()
+
     conn, cur=setup()
 
     if conn == None and cur == None:
@@ -23,7 +23,7 @@ def aicp():
     while True:
         cmds=str(input(f"{Fore.BLUE}aicp{Fore.CYAN}$ {Fore.WHITE}"))
 
-        cmds=split_cmd(cmds)
+        cmds=split_cmds(cmds)
 
         if exec_cmd(conn, cur, cmds):
             break

@@ -61,7 +61,7 @@ def setup():
     return conn, cur
 
 
-def split_cmd(cmds):
+def split_cmds(cmds):
     if cmds.find("&&") != -1:
         cmds=cmds.replace("&&", ";")
 

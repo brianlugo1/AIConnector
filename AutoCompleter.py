@@ -1,5 +1,12 @@
-from Constants import *
 import readline
+
+from Constants import (
+    STD_CMDS,
+    DTS,
+    STD_FLGS
+)
+
+from utilities import split_cmds
 
 
 
@@ -10,20 +17,10 @@ class MyCompleter(object):
     def complete(self, text, state):
         if state == 0:
             line=readline.get_line_buffer()
-            cmds=line.replace("&&", ";").split(";")
-            tokens=cmds[-1].strip().split(" ")
 
-            stored_flags={
-                DTS: [
-                    TDY,
-                    YTD,
-                    ALL,
-                    MST,
-                    LGT,
-                    SRT,
-                    DTE,
-                ]
-            }
+            cmds=split_cmds(line)
+
+            tokens=cmds[-1].strip().split(" ")
 
             cmd=tokens[0].strip().lower()
 
@@ -36,7 +33,7 @@ class MyCompleter(object):
 
                 flag=tokens[1].strip().lower()
 
-                self.matches = [s for s in stored_flags[DTS] if s and s.startswith(flag)]
+                self.matches = [s for s in STD_FLGS if s and s.startswith(flag)]
 
             if not text:
                 self.matches = self.options[:]
