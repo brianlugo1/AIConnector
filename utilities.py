@@ -3,13 +3,9 @@ from ai import ai
 from queries import *
 from usage import usage
 from Constants import *
-from details import details
-
-from dotenv import load_dotenv
-load_dotenv()
-
 from colorama import Fore
-
+from details import details
+from dotenv import load_dotenv
 from Levenshtein import distance
 
 
@@ -44,6 +40,8 @@ def print_welcome_message():
 
 
 def setup():
+    load_dotenv()
+
     conn, cur = create_connection()
 
     if conn == None and cur == None:
