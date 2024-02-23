@@ -22,7 +22,7 @@ def format_conversation(conversation):
 def format_conversations(conversations):
     print("-----------------------------------------------------------------------")
 
-    print(f"|{ID}|{TIME}|{DATE}|{TIMEWAITED}|{AI}|")
+    print(f"|{ID}|{DATE}|{TIME}|{TIMEWAITED}|{AI}|")
 
     print("-----------------------------------------------------------------------")
 
