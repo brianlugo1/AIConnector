@@ -11,9 +11,7 @@ from Levenshtein import distance
 
 
 def print_welcome_message():
-    print(f"{Fore.CYAN}")
-
-    print("------------------------------------------------")
+    print(f"{Fore.CYAN}------------------------------------------------")
     print("|         Welcome to AIConnector               |")
     print("|                                              |")
     print("|   I was created to help you connect with     |")
