@@ -1,7 +1,7 @@
-from colorama import init, Fore
+import textwrap
 from queries import *
 from usage import usage
-import textwrap
+from colorama import Fore
 
 
 
@@ -13,8 +13,7 @@ def format_conversation(conversation):
     print("----------------------------------------------------------------------")
     print(f"Question: {question}")
 
-    print()
-    print(f"{Fore.GREEN}{ai}{Fore.WHITE}:")
+    print(f"\n{Fore.GREEN}{ai}{Fore.WHITE}:")
 
     for line in textwrap.wrap(answer.replace("\"", "\'"), width=70):
         print(f"{line}")
@@ -47,8 +46,6 @@ def format_conversations(conversations):
 
 
 def details(cur, m):
-    init()
-
     conversations=[]
 
     title={

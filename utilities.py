@@ -8,8 +8,7 @@ from details import details
 from dotenv import load_dotenv
 load_dotenv()
 
-from colorama import init, Fore
-init()
+from colorama import Fore
 
 from Levenshtein import distance
 
@@ -45,8 +44,6 @@ def print_welcome_message():
 
 
 def setup():
-    init()
-
     conn, cur = create_connection()
 
     if conn == None and cur == None:
