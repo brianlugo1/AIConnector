@@ -21,7 +21,7 @@ def print_welcome_message():
     print("|         Welcome to AIConnector               |")
     print("|                                              |")
     print("|   I was created to help you connect with     |")
-    print("|     ChatGPT or Perplexity and provide        |")
+    print("|   ChatGPT, Perplexity, Llama and provide     |")
     print("|      insightful analytics about your         |")
     print("|               conversations!                 |")
     print("|                                              |")
