@@ -6,14 +6,12 @@ from utilities import (
     exec_cmd
 )
 
-from colorama import init, Fore
+from colorama import Fore
 from AutoCompleter import MyCompleter
 
 
 
 def aicp():
-    init()
-
     conn, cur=setup()
 
     if conn == None and cur == None:
