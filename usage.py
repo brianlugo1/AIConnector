@@ -1,4 +1,4 @@
-from colorama import init, Fore
+from colorama import Fore
 
 
 
@@ -53,8 +53,6 @@ def probable_command(m):
 
 
 def usage(m="", ai = "", f_n_f="", probable_cmd="", cmd_n_f=""):
-    init()
-
     if m=="h":
         help_usage()
     elif m=="o":

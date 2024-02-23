@@ -184,4 +184,3 @@ def select_conversations_give_date(cur, date):
     ")
 
     return cur.fetchall()
-
