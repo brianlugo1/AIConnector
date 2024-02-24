@@ -28,7 +28,11 @@ def aicp():
 
 
 readline.set_completer(MyCompleter([]).complete)
+
 readline.parse_and_bind("tab: complete")
+
+readline.parse_and_bind("bind -v")
+
 readline.parse_and_bind("bind ^I rl_complete")
 
 
