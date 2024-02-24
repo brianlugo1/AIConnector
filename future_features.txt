@@ -39,6 +39,4 @@
 
 [] Filter by ai asked!
 
-[] Keep an array of asked questions for both Chatgpt and Perplexity to have the context when asking questions!
-
-[] Add logic to autocorrect commands and flags!
+[] Keep an array of asked questions for Chatgpt, Perplexity, and Llama to have the context when asking questions!
