@@ -83,9 +83,8 @@ def process_details_cmd(cur, cmd):
     processed_cmd=cmd.split(" ")[0].lower()
 
     if len(processed_cmd)==1:
-
         for std_cmd in STD_FLGS_1ST_CHAR:
-            if distance(std_cmd, processed_cmd)==0:
+            if std_cmd == processed_cmd:
                 details(cur, cmd)
                 return
 
