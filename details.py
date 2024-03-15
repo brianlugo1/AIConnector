@@ -9,11 +9,14 @@ from colorama import Fore
 def format_conversation(conversation):
     print("----------------------------------------------------------------------")
 
-    print(f"Question: {conversation[1]}")
+    print(f"Question:")
+
+    for line in textwrap.wrap(conversation[1], width=70):
+        print(f"{line}")
 
     print(f"\n{Fore.GREEN}{conversation[6]}{Fore.WHITE}:")
 
-    for line in textwrap.wrap(conversation[2].replace("\"", "\'"), width=70):
+    for line in textwrap.wrap(conversation[2], width=70):
         print(f"{line}")
 
     print("----------------------------------------------------------------------")
