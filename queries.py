@@ -11,6 +11,7 @@ def create_connection():
         cur=conn.cursor()
 
         return conn, cur
+
     except:
         return None, None
 
