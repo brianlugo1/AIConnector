@@ -20,6 +20,7 @@
 [] Filter by length of question and answer to display the shortest and longest!
 
 [] Allow the ability to pass a file to be read in chatgpt!
+
 [] Allow the ability to add a link for text chatgpt!
 
 [] From the generated code, create a file with that code!
@@ -35,7 +36,7 @@
     - Export to JSON
     - Export to Markdown
 
-[] Add feature that when question asked is stored, prompt to use stored answer or ask chatgpt again!
+[] Add feature that when question asked is stored, prompt to use stored answer or ask corresponding ai again!
 
 [] Filter by ai asked!
 
