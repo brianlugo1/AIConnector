@@ -53,10 +53,12 @@ AI="ai"
 FLE="file"
 PRB="probable"
 
-width=13
+COLUMN_WIDTH=13
 
-ID="ID".center(width, ' ')
-TIME="Times Asked".center(width, ' ')
-DATE="Date Asked".center(width, ' ')
-TIMEWAITED="Time Waited".center(width, ' ')
-AI="AI".center(width, ' ')
+ID="ID".center(COLUMN_WIDTH, ' ')
+TIME="Times Asked".center(COLUMN_WIDTH, ' ')
+DATE="Date Asked".center(COLUMN_WIDTH, ' ')
+TIMEWAITED="Time Waited".center(COLUMN_WIDTH, ' ')
+AI="AI".center(COLUMN_WIDTH, ' ')
+
+STANDARD_TEXT_WIDTH=70

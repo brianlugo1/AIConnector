@@ -1,48 +1,46 @@
-import textwrap
 from queries import *
 from usage import usage
 from Constants import *
 from colorama import Fore
+from format import *
 
 
 
 def format_conversation(conversation):
-    print("----------------------------------------------------------------------")
+    print(format_divider())
 
     print(f"Question:")
 
-    for line in textwrap.wrap(conversation[1], width=70):
-        print(f"{line}")
+    format_textwrap(conversation[1])
 
     print(f"\n{Fore.GREEN}{conversation[6]}{Fore.WHITE}:")
 
-    for line in textwrap.wrap(conversation[2], width=70):
-        print(f"{line}")
+    format_textwrap(conversation[2])
 
-    print("----------------------------------------------------------------------")
+    print(format_divider())
 
 
 def format_conversations(conversations):
-    print("-----------------------------------------------------------------------")
+    print(format_divider())
 
     print(f"|{ID}|{DATE}|{TIME}|{TIMEWAITED}|{AI}|")
 
-    print("-----------------------------------------------------------------------")
+    print(format_divider())
 
     for conversation in conversations:
-        id=str(conversation[0]).center(width, ' ')
+        id=format_column(conversation[0])
 
-        times_asked=str(conversation[3]).center(width, ' ')
+        times_asked=format_column(conversation[3])
 
-        date_asked=str(conversation[4]).center(width, ' ')
+        date_asked=format_column(conversation[4])
 
-        time_waited=str(conversation[5]).center(width, ' ')
+        time_waited=format_column(conversation[5])
 
-        ai=str(conversation[6]).center(width, ' ')
+        ai=format_column(conversation[6])
 
         print(f"|{id}|{date_asked}|{times_asked}|{time_waited}|{ai}|")
 
-    print("-----------------------------------------------------------------------")
+    print(format_divider())
 
 
 def details(cur, flag):

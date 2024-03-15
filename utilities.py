@@ -7,34 +7,35 @@ from details import details
 from dotenv import load_dotenv
 from colorama import init, Fore
 from Levenshtein import distance
+from format import *
 
 
 
 def print_welcome_message():
-    print(f"{Fore.CYAN}------------------------------------------------")
-    print("|         Welcome to AIConnector               |")
-    print("|                                              |")
-    print("|   I was created to help you connect with     |")
-    print("|   ChatGPT, Perplexity, Llama and provide     |")
-    print("|      insightful analytics about your         |")
-    print("|               conversations!                 |")
-    print("|                                              |")
-    print("|   To ask ChatGPT a question simply type:     |")
-    print(f"|       {GPT} or {GPT[0]}                           |")
-    print("|                                              |")
-    print("|   To ask Perplexity a question simply type:  |")
-    print(f"|       {PER} or {PER[0]}                        |")
-    print("|                                              |")
-    print("|   To ask Llama a question simply type:       |")
-    print(f"|       {LMA} or {LMA[0]}                             |")
-    print("|                                              |")
-    print("|   To view a detailed report type:            |")
-    print(f"|       {DTS} or {DTS[0]}                           |")
-    print("|                                              |")
-    print("|   To ask for help type:                      |")
-    print(f"|       {HLP} or {HLP[0]}                              |")
-    print("|                                              |")
-    print("------------------------------------------------\n")
+    print(f"{Fore.CYAN}{format_divider()}")
+    print(format_welcome_text("Welcome to AIConnector"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("I was created to help you connect with"))
+    print(format_welcome_text("ChatGPT, Perplexity, Llama and provide"))
+    print(format_welcome_text("insightful analytics about your"))
+    print(format_welcome_text("conversations!"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask ChatGPT a question simply type:"))
+    print(format_welcome_text(f"{GPT} or {GPT[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask Perplexity a question simply type:"))
+    print(format_welcome_text(f"{PER} or {PER[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask Llama a question simply type:"))
+    print(format_welcome_text(f"{LMA} or {LMA[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To view a detailed report type:"))
+    print(format_welcome_text(f"{DTS} or {DTS[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask for help type:"))
+    print(format_welcome_text(f"{HLP} or {HLP[0]}"))
+    print(format_welcome_text(""))
+    print(f"{format_divider()}\n")
 
 
 def setup():

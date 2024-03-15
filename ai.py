@@ -1,10 +1,10 @@
 import os
 import time
-import textwrap
 from queries import *
 from ollama import Client
 from openai import OpenAI
 from colorama import Fore
+from format import *
 
 
 
@@ -70,11 +70,9 @@ def ai(ai, conn, cur, msg):
         print(f"{Fore.GREEN}{ai}{Fore.WHITE} responded in: {toc - tic:0.2f} seconds\n")
 
         if ai==LMA:
-            for line in textwrap.wrap(completion["message"]["content"]):
-                print(line.strip())
+            format_textwrap(completion["message"]["content"])
         else:
-            for line in textwrap.wrap(completion.choices[0].message.content):
-                print(line)
+            format_textwrap(completion.choices[0].message.content)
 
         print()
 
@@ -92,19 +90,20 @@ def ai(ai, conn, cur, msg):
     else:
         print("\nQuestion already asked:\n")
 
-        print("--------------------------------------------------")
+        print(format_divider())
 
         for question in questions:
             print('Stored answer:\n')
 
-            for line in textwrap.wrap(question[2]):
-                print(f"{line}")
+            format_textwrap(question[2])
 
             print(f"\nTime {Fore.GREEN}{question[6]}{Fore.WHITE} took to respond: {question[5]} seconds")
+
             print(f"Date asked: {question[4]}")
+
             print(f"Times asked: {question[3]+1}")
 
-        print("--------------------------------------------------\n")
+        print(format_divider())
 
         msg=msg.replace("\'", "\\\'").replace("\"", "\\\"")
 
