@@ -15,3 +15,6 @@ def format_divider():
 
 def format_welcome_text(text):
     return f"|{str(text).center(STANDARD_TEXT_WIDTH - 2, ' ')}|"
+
+def format_escape_single_and_double_quotes(text):
+    return text.replace("\'", "\\\'").replace("\"", "\\\"")

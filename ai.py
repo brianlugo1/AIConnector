@@ -11,7 +11,7 @@ from format import *
 def ai(ai, conn, cur, msg):
     questions=search_question(
         cur,
-        msg.replace("\'", "\\\'").replace("\"", "\\\""),
+        format_escape_single_and_double_quotes(msg),
         ai
     )
 
@@ -76,14 +76,14 @@ def ai(ai, conn, cur, msg):
 
         print()
 
-        question=msg.replace("\'", "\\\'").replace("\"", "\\\"")
+        question=format_escape_single_and_double_quotes(msg)
 
         answer=""
 
         if ai==LMA:
-            answer=completion["message"]["content"].replace("\'", "\\\'").replace("\"", "\\\"")
+            answer=format_escape_single_and_double_quotes(completion["message"]["content"])
         else:
-            answer=completion.choices[0].message.content.replace("\'", "\\\'").replace("\"", "\\\"")
+            answer=format_escape_single_and_double_quotes(completion.choices[0].message.content)
 
         insert_conversation(conn, cur, question, answer, f"{toc - tic:0.2f}", ai)
 
@@ -105,6 +105,6 @@ def ai(ai, conn, cur, msg):
 
         print(format_divider())
 
-        msg=msg.replace("\'", "\\\'").replace("\"", "\\\"")
+        msg=format_escape_single_and_double_quotes(msg)
 
         increase_count_of_question(conn, cur, msg, ai)
