@@ -66,7 +66,7 @@ def setup() -> Tuple | Tuple[None, None]:
 
     Returns:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     """
     init()
 
@@ -115,7 +115,7 @@ def process_ai_cmd(conn, cur, msg: str, ai_cmd: str) -> None:
 
     Parameters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     msg: string (The prompt message asked to the target ai)
     ai_cmd: string (The target ai)
 
@@ -143,7 +143,7 @@ def process_details_cmd(cur, cmd: str) -> None:
     calls usage() with the parsed flag.
 
     Parameters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     cmd: string (The parsed details command)
 
     Returns:
@@ -217,7 +217,7 @@ def exec_cmd(conn, cur, cmds: str) -> int:
 
     Parameters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     cmds: string (The parsed command)
 
     Returns:

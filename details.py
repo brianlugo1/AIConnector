@@ -73,7 +73,7 @@ def details(cur, flag: str) -> None:
     the given flag.
 
     Parameters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     flag: string (The parsed flag for filtering stored conversations)
 
     Returns:

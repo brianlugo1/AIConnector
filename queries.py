@@ -19,7 +19,7 @@ def create_connection() -> Tuple | Tuple[None, None]:
     Returns:
     A Tuple of
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Or A Tuple of
     None
@@ -45,7 +45,7 @@ def create_table(conn, cur) -> None:
 
     Paramters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     None
@@ -72,7 +72,7 @@ def delete_table(conn, cur) -> None:
 
     Paramters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     None
@@ -91,7 +91,7 @@ def clear_table(conn, cur) -> None:
 
     Paramters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     None
@@ -109,7 +109,7 @@ def select_table_names(cur) -> list:
     returns the result set of table names.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     cur.fetchall(): list (The list of table names in the db `ai`)
@@ -130,7 +130,7 @@ def select_table_columns(cur) -> list:
     returns the result set of table columns.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     cur.fetchall(): list (The list of table names in the db `ai`)
@@ -151,7 +151,7 @@ def print_table_details(cur) -> None:
     the type.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     None
@@ -175,7 +175,7 @@ def select_all_conversations(cur) -> list:
     result set of all stored conversations.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     cur.fetchall(): list (The list of table names in the db `ai`)
@@ -198,7 +198,7 @@ def insert_conversation(conn, cur, question: str, answer: str, seconds: int, ai:
 
     Paramters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     question: string (The prompt message)
     answer: string (The response from target ai)
     seconds: integer (The seconds target ai responded)
@@ -230,7 +230,7 @@ def delete_conversation(conn, cur, question: str, answer: str) -> None:
 
     Paramters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     question: string (The prompt message)
     answer: string (The response from target ai)
 
@@ -254,7 +254,7 @@ def search_question(cur, question: str, ai: str) -> list:
     set of the matching conversations.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     question: string (The prompt message)
     ai: string (The target ai)
 
@@ -280,7 +280,7 @@ def increase_count_of_question(conn, cur, question: str, ai: str) -> None:
 
     Paramters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     question: string (The prompt message)
     ai: string (The target ai)
 
@@ -304,7 +304,7 @@ def select_questions_asked(cur, d: str) -> list:
     commits the changes to the db `ai`.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     d: string (The given flag to filter stored conversations)
 
     Returns:
@@ -340,7 +340,7 @@ def select_most_asked_question(cur) -> list:
     the most times asked.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     cur.fetchall(): list (The list of table names in the db `ai`)
@@ -366,7 +366,7 @@ def select_longest_question_waited_for(cur) -> list:
     most asked times.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     cur.fetchall(): list (The list of table names in the db `ai`)
@@ -391,7 +391,7 @@ def select_shortest_question_waited_for(cur) -> list:
     shortest duration.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
 
     Returns:
     cur.fetchall(): list (The list of table names in the db `ai`)
@@ -412,7 +412,7 @@ def select_conversation_given_id(cur, id: int) -> list:
     set of the conversation with the given id.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     id: integer (The id of a stored conversation)
 
     Returns:
@@ -433,7 +433,7 @@ def select_conversations_given_date(cur, date: str) -> list:
     set of the conversations with the given date.
 
     Paramters:
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     date: string (A date to query all stored conversations)
 
     Returns:

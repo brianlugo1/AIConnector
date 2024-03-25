@@ -23,7 +23,7 @@ def ai(ai: str, conn, cur, msg: str) -> None:
     Parameters:
     ai: string (The name of the target ai)
     conn: connection (The connection object returned from `psycopg2.connect()`)
-    cur: cursor (The cursor returned from `conn.cursor()`)
+    cur: cursor (The cursor object returned from `conn.cursor()`)
     msg: string (The prompt message asked to the target ai)
 
     Returns:
