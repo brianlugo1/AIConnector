@@ -39,6 +39,8 @@ def aicp() -> None:
 
         if exec_cmd(conn, cur, cmds):
             break
+    
+    conn.close()
 
 
 readline.set_completer(MyCompleter([]).complete)
