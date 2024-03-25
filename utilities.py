@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from colorama import init, Fore
 from Levenshtein import distance
 from format import *
+from typing import Tuple
 
 
 
@@ -38,7 +39,25 @@ def print_welcome_message():
     print(f"{format_divider()}\n")
 
 
-def setup():
+"""
+Description:
+setup() initializes colorama, loads enviornment variables,
+and attempts to create a connection to postgresql server.
+If the attempt to connect to the postgresql server fails,
+a tuble of None, None is returned. setup() then creates
+the table in the db. setup() then clears the console,
+prints the welcome message, and returns the conn and
+cur objects.
+
+
+Parameters:
+None
+
+Returns:
+conn: connection (The connection object returned from `psycopg2.connect()`)
+cur: cursor (The cursor returned from `conn.cursor()`)
+"""
+def setup() -> Tuple | Tuple[None, None]:
     init()
 
     load_dotenv()
