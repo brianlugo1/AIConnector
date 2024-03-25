@@ -25,8 +25,11 @@ ai: string (The name of the target ai)
 conn: connection (The connection object returned from `psycopg2.connect()`)
 cur: cursor (The cursor returned from `conn.cursor()`)
 msg: string (The prompt message asked to the target ai)
+
+Returns:
+None
 """
-def ai(ai: str, conn, cur, msg: str):
+def ai(ai: str, conn, cur, msg: str) -> None:
     questions=search_question(
         cur,
         format_escape_single_and_double_quotes(msg),

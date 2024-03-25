@@ -11,7 +11,22 @@ from AutoCompleter import MyCompleter
 
 
 
-def aicp():
+"""
+Description:
+aicp() envokes a connection to the postgresql server
+hosting our db and starts the forever while loop
+reading in commands. Each read in command is parsed
+and an attempt is made to execute each parsed
+command. If an attempt to execute a command returns
+a 0, then the while loop terminates.
+
+Parameters:
+None
+
+Returns:
+None
+"""
+def aicp() -> None:
     conn, cur=setup()
 
     if conn==None and cur==None:
