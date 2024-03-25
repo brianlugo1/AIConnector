@@ -6,7 +6,18 @@ from format import *
 
 
 
-def format_conversation(conversation):
+"""
+Description:
+format_conversation() prints the stored prompt
+message, target ai, and response to the console.
+
+Parameters:
+conversation: list (The list of attributes for a given conversation to print)
+
+Returns:
+None
+"""
+def format_conversation(conversation: list) -> None:
     print(format_divider())
 
     print(f"Question:")
@@ -20,7 +31,19 @@ def format_conversation(conversation):
     print(format_divider())
 
 
-def format_conversations(conversations):
+"""
+Description:
+format_conversations() prints a table with a
+header of column names and all of the stored
+ids, dates, times asked, and target ai.
+
+Paramters:
+conversations: list[list] (A list of lists of attributes of given conversations to print)
+
+Returns:
+None
+"""
+def format_conversations(conversations: list[list]) -> None:
     print(format_divider())
 
     print(f"|{ID}|{DATE}|{TIME}|{TIMEWAITED}|{AI}|")
@@ -43,7 +66,22 @@ def format_conversations(conversations):
     print(format_divider())
 
 
-def details(cur, flag):
+"""
+Description:
+details() takes the parsed flag and attemps
+to query the db for stored conversations
+that satisfy the given flag. details() then
+prints the stored conversations that satisfy
+the given flag.
+
+Parameters:
+cur: cursor (The cursor returned from `conn.cursor()`)
+flag: string (The parsed flag for filtering stored conversations)
+
+Returns:
+None
+"""
+def details(cur, flag: str) -> None:
     conversations=[]
 
     title={
