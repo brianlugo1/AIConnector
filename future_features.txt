@@ -14,6 +14,7 @@
 [x] Fixed error with not being able to insert single and double quotes in questions and answers!
 [x] Add tab for autocomplete commands and flags.
 [x] Add Llama local client support!
+[x] Add comments for descripting what all existing functions do, the parameters they get passed, and return values!
 
 [] Save money by removing unnecessary tokens in users' messages sent.
 
