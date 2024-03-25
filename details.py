@@ -139,7 +139,7 @@ def details(cur, flag: str) -> None:
             usage(usage=DTE)
             return
 
-        conversations=select_conversations_give_date(cur, date)
+        conversations=select_conversations_given_date(cur, date)
 
     id=""
 
