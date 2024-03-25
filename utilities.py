@@ -12,7 +12,19 @@ from typing import Tuple
 
 
 
-def print_welcome_message():
+"""
+Description:
+print_welcome_message() prints out the
+information about aicp and what supported
+commands exist.
+
+Parameters:
+None
+
+Returns:
+None
+"""
+def print_welcome_message() -> None:
     print(f"{Fore.CYAN}{format_divider()}")
     print(format_welcome_text("Welcome to AIConnector"))
     print(format_welcome_text(""))
@@ -76,14 +88,44 @@ def setup() -> Tuple | Tuple[None, None]:
     return conn, cur
 
 
-def split_cmds(cmds):
+"""
+Description:
+split_cmds() replaces any instances of
+the text `&&` with `;` and returns a
+list of parsed commands split on the
+occurrences of `;`.
+
+Parameters:
+cmds: string (The parsed string of commands)
+
+Returns:
+cmds.split(";"): list[str] (The list of parsed commands)
+"""
+def split_cmds(cmds: str) -> list[str]:
     if cmds.find("&&") != -1:
         cmds=cmds.replace("&&", ";")
 
     return cmds.split(";")
 
 
-def process_ai_cmd(conn, cur, msg, ai_cmd):
+"""
+Description:
+process_ai_cmd() calls usage() with the
+flag of AI constant column string and
+the target ai if no prompt message is
+passed. Otherwise call ai() with the
+parsed prompt message and target ai.
+
+Parameters:
+conn: connection (The connection object returned from `psycopg2.connect()`)
+cur: cursor (The cursor returned from `conn.cursor()`)
+msg: string (The prompt message asked to the target ai)
+ai_cmd: string (The target ai)
+
+Returns:
+None
+"""
+def process_ai_cmd(conn, cur, msg: str, ai_cmd: str) -> None:
     if msg=="":
         usage(usage=AI, ai=ai_cmd)
         return
@@ -91,7 +133,27 @@ def process_ai_cmd(conn, cur, msg, ai_cmd):
     ai(ai_cmd, conn, cur, msg.strip())
 
 
-def process_details_cmd(cur, cmd):
+"""
+Description:
+process_details_cmd() confirms that valid
+flags are passed to details command. Otherwise
+process_details_cmd() attempts to determine
+which flag is passed and envoke target logic.
+If passed in parsed flags do not match stored
+flags for details command, then the stored
+command that is the closest in terms of
+insertions, deletions, and replacements is
+returned. Otherwise process_details_cmd()
+calls usage() with the parsed flag.
+
+Parameters:
+cur: cursor (The cursor returned from `conn.cursor()`)
+cmd: string (The parsed details command)
+
+Returns:
+None
+"""
+def process_details_cmd(cur, cmd: str) -> None:
     if cmd=="":
         usage(usage=DTS)
         return
@@ -143,7 +205,30 @@ def process_details_cmd(cur, cmd):
         return
 
 
-def exec_cmd(conn, cur, cmds):
+"""
+Description:
+exec_cmd() attempts to parse the passed in
+command and confirms if the parsed command
+is valid. If true, exec_cmd() envokes
+target logic to execute parsed command.
+Otherwise calls usage() with the
+corresponding parsed command and flags.
+If a parsed command does not match to a
+stored command, the closest matching
+command is passed to usage(). If the
+`exit` command is parsed, the variable
+`exit_code` is set to 1 and returned.
+Otherwise exec_cmd() returns a 0.
+
+Parameters:
+conn: connection (The connection object returned from `psycopg2.connect()`)
+cur: cursor (The cursor returned from `conn.cursor()`)
+cmds: string (The parsed command)
+
+Returns:
+exit_code: integer (Either a 1 or 0 for whether the `exit` command is parsed)
+"""
+def exec_cmd(conn, cur, cmds: str) -> int:
     exit_code=0
 
     for cmd in cmds:
