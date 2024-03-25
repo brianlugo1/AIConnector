@@ -3,7 +3,18 @@ from colorama import Fore
 
 
 
-def help_usage():
+"""
+Description:
+help_usage() prints out the information
+for supported commands.
+
+Paramters:
+None
+
+Returns:
+None
+"""
+def help_usage() -> None:
     print(f"{Fore.RED}Usage: [options]\n")
 
     print("Options:")
@@ -17,11 +28,35 @@ def help_usage():
     print(f"    {DTS[0]},    {DTS}: view details about existing conversations")
 
 
-def ai_usage(ai):
+"""
+Description:
+ai_usage() prints out information for
+how to correctly run the command for
+interfacing with the target ai.
+
+Paramters:
+ai: string (The parsed target ai)
+
+Returns:
+None
+"""
+def ai_usage(ai: str) -> None:
     print(f"{Fore.RED}Usage: {ai} {ai[:1]} [question]")
 
 
-def details_usage():
+"""
+Description:
+details_usage() prints the information
+for all supported flags for details
+command.
+
+Paramters:
+None
+
+Returns:
+None
+"""
+def details_usage() -> None:
     print(f"{Fore.RED}Usage: {DTS} {DTS[0]} [options]\n")
 
     print("Options:")
@@ -37,27 +72,101 @@ def details_usage():
     print("                     (expected format: YYYY-MM-DD)")
 
 
-def details_date_usage():
+"""
+Description:
+details_date_usage() prints out the
+information for how to use the date
+flag for details command.
+
+Paramters:
+None
+
+Returns:
+None
+"""
+def details_date_usage() -> None:
     print(f"{Fore.RED}Usage: {DTS} {DTE} {DTE[0]} [YYYY-DD-MM]")
 
 
-def exit_message():
+"""
+Description:
+exit_message() prints out the exit message.
+
+Paramters:
+None
+
+Returns:
+None
+"""
+def exit_message() -> None:
     print(f"{Fore.RED}exit")
 
 
-def command_not_found_usage(m):
+"""
+Description:
+command_not_found_usage() prints out
+information about the unknown parsed
+command.
+
+Paramters:
+m: string (The unknown parsed command)
+
+Returns:
+None
+"""
+def command_not_found_usage(m: str) -> None:
     print(f"{Fore.RED}aicp: command not found: {m}")
 
 
-def file_not_found_usage(m):
+"""
+Description:
+file_not_found_usage() prints out
+information about the unknown parsed
+file or directory.
+
+Paramters:
+m: string (The unknown file or directory parsed)
+
+Returns:
+None
+"""
+def file_not_found_usage(m) -> None:
     print(f"{Fore.RED}aicp: no such file or directory: {m}")
 
 
-def probable_command_usage(m):
+"""
+Description:
+probable_command_usage() prints out
+information about the probable command
+meant to be typed.
+
+Paramters:
+m: string (The probable command)
+
+Returns:
+None
+"""
+def probable_command_usage(m: str) -> None:
     print(f"aicp: did you mean to type {m}?")
 
 
-def usage(usage="", ai="", file_not_found="", probable_command="", command_not_found=""):
+"""
+Description:
+usage() calls the corresponding functions
+for the given flag and passes the passed
+in parsed paramters.
+
+Paramters:
+usage: string (The usage flag)
+ai: string (The parsed target ai)
+file_not_found: string (The unknown parsed file or directory)
+probable_command: string (The probable command)
+command_not_found: string (The unknown parsed command)
+
+Returns:
+None
+"""
+def usage(usage: str="", ai: str="", file_not_found: str="", probable_command: str="", command_not_found: str="") -> None:
     if usage==HLP:
         help_usage()
 
