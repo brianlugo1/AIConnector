@@ -18,7 +18,9 @@ def aicp() -> None:
     reading in commands. Each read in command is parsed
     and an attempt is made to execute each parsed
     command. If an attempt to execute a command returns
-    a 0, then the while loop terminates.
+    a 0, then the while loop terminates. Before exiting,
+    aicp() closes the opened connection to the
+    postgresql server.
 
     Parameters:
     None
