@@ -8,7 +8,25 @@ from format import *
 
 
 
-def ai(ai, conn, cur, msg):
+"""
+Description:
+Given a target ai, a connection, a cursor, and a message,
+ai() attempts to send an api request to the target ai with
+the passed in message. ai() will query the db to check if
+the message has been sent before to the target ai, thus
+printing the stored response stored to save an unnecessary
+api request. Otherwise, ai() will print the response from
+the target ai, the time in seconds the target ai took to
+respond, and store the target ai with the message and
+response in the db.
+
+Parameters:
+ai: string (The name of the target ai)
+conn: connection (The connection object returned from `psycopg2.connect()`)
+cur: cursor (The cursor returned from `conn.cursor()`)
+msg: string (The prompt message asked to the target ai)
+"""
+def ai(ai: str, conn, cur, msg: str):
     questions=search_question(
         cur,
         format_escape_single_and_double_quotes(msg),
