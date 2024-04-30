@@ -6,3 +6,4 @@ psycopg2-binary # For Development
 colorama
 python-Levenshtein
 ollama
+pyinstaller

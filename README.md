@@ -73,6 +73,9 @@ https://pypi.org/project/colorama/
 Levenshtein Python Library Documentation:
 https://pypi.org/project/python-Levenshtein/
 
+Pyinstaller Python Library Documentation:
+https://pypi.org/project/pyinstaller/
+
 
 Follow the instructions for downloading postgres:
 https://postgresapp.com/downloads.html
@@ -174,3 +177,14 @@ Then run the command:
 
 Copy and paste the output to where `full/path/to` is.
 e.g. `/Users/your_user_name/OpenAI/AIConnector.py`
+
+
+
+Create an executable of aicp:
+Using pyinstaller run the following command in the
+root directory of the project:
+
+`pyinstaller AIConnector.py --onefile --windowed`
+
+Once completed, run the executable `AIConnector` in
+the newly created `dist` directory.
