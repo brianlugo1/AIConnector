@@ -80,7 +80,12 @@ def ai_usage(ai: str) -> None:
     Returns:
     None
     """
-    print(f"{Fore.RED}Usage: {ai} {ai[:1]} [question]")
+    print(f"{Fore.RED}Usage: {ai} {ai[:1]} [options] [question]\n")
+
+    print("Options:")
+
+    print(f"    {FLE[0]} {FLE} [filename]: append the contents of a file to your prompt message")
+    print(f"         {LNK[0]} {LNK} [url]: append the contents of url to your prompt message")
 
 
 def ai_exception_message(ai: str, ai_exception: str) -> None:
