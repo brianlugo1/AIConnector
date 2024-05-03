@@ -76,6 +76,9 @@ https://pypi.org/project/python-Levenshtein/
 Pyinstaller Python Library Documentation:
 https://pypi.org/project/pyinstaller/
 
+Requests Python Library Documentation:
+https://pypi.org/project/requests/
+
 
 Follow the instructions for downloading postgres:
 https://postgresapp.com/downloads.html
