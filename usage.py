@@ -67,7 +67,6 @@ def welcome_usage() -> None:
     print(f"{format_divider()}\n")
 
 
-
 def ai_usage(ai: str) -> None:
     """
     ai_usage() prints out information for
@@ -126,9 +125,10 @@ def details_usage() -> None:
     print(f"    {MST[0]},        {MST}: display a report for the {MST} asked conversation")
     print(f"    {LGT[0]},     {LGT}: display a report for the conversation that took the {LGT}")
     print(f"    {SRT[0]},    {SRT}: display a report for the conversation that took the {SRT}")
-    print("              [id]: display the report for the conversation with the given id")
-    print(f"    {DTE[0]}, {DTE} [{DTE}]: display the report for the conversation with the given {DTE}")
+    print("              [id]: display a report for the conversation with the given id")
+    print(f"    {DTE[0]}, {DTE} [{DTE}]: display a report for the conversation with the given {DTE}")
     print("                     (expected format: YYYY-MM-DD)")
+    print(f"    ai,       [ai]: display a report for all conversations with the given ai")
 
 
 def details_date_usage() -> None:
@@ -144,6 +144,27 @@ def details_date_usage() -> None:
     None
     """
     print(f"{Fore.RED}Usage: {DTS} {DTE} {DTE[0]} [YYYY-DD-MM]")
+
+
+def details_ai_usage() -> None:
+    """
+    details_ai_usage() prints out the
+    information for how to use the ai
+    flag for details command.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
+    print(f"{Fore.RED}Usage: {DTS} {DTS[0]} {AI} [options]\n")
+
+    print("Options:")
+
+    print(f"    {GPT[0]},       {GPT}")
+    print(f"    {PER[0]},       {PER}")
+    print(f"    {LMA[0]},       {LMA}")
 
 
 def exit_message() -> None:
@@ -254,6 +275,9 @@ def usage(usage: str="", ai: str="", ai_exception: str="", file_not_found: str="
 
     elif usage==DTE:
         details_date_usage()
+    
+    elif usage==DTE+AI:
+        details_ai_usage()
 
     elif usage==EXT:
         exit_message()

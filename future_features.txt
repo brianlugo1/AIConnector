@@ -17,8 +17,7 @@
 [x] Add comments for descripting what all existing functions do, the parameters they get passed, and return values!
 [x] Allow the ability to pass a file to be read in chatgpt!
 [x] Allow the ability to add a link for text chatgpt!
-
-[] Filter by ai asked!
+[x] Filter by ai asked!
 
 [] Add length of a question and answer
 

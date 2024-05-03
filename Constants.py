@@ -19,6 +19,7 @@ MST="most"
 LGT="longest"
 SRT="shortest"
 DTE="date"
+AI="ai"
 
 STD_CMDS=[
     EXT,
@@ -32,6 +33,7 @@ STD_CMDS=[
 ]
 
 STD_FLGS=[
+    AI,
     TDY,
     YTD,
     ALL,
@@ -51,7 +53,6 @@ STD_FLGS_1ST_CHAR=[
     DTE[0],
 ]
 
-AI="ai"
 AIE="ai_exception"
 FLE="file"
 LNK="link"
@@ -63,7 +64,7 @@ ID="ID".center(COLUMN_WIDTH, ' ')
 TIME="Times Asked".center(COLUMN_WIDTH, ' ')
 DATE="Date Asked".center(COLUMN_WIDTH, ' ')
 TIMEWAITED="Time Waited".center(COLUMN_WIDTH, ' ')
-AI="AI".center(COLUMN_WIDTH, ' ')
+AIC="AI".center(COLUMN_WIDTH, ' ')
 
 STANDARD_TEXT_WIDTH=70
 

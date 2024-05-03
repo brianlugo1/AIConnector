@@ -162,7 +162,6 @@ def parse_ai_flags(msg: str, ai_cmd: str) -> str | None:
     return new_msg
 
 
-
 def process_ai_cmd(conn, cur, msg: str, ai_cmd: str) -> None:
     """
     process_ai_cmd() calls usage() with the
@@ -237,7 +236,7 @@ def process_details_cmd(cur, cmd: str) -> None:
         process_details_cmd=""
 
         for std_cmd in STD_FLGS:
-            dist=distance(cmd, std_cmd)
+            dist=distance(processed_cmd, std_cmd)
 
             if dist <= min_dist:
                 min_dist=dist
@@ -245,6 +244,10 @@ def process_details_cmd(cur, cmd: str) -> None:
                 process_details_cmd=std_cmd
 
         if min_dist==0:
+            if processed_cmd==AI:
+                details(cur, cmd)
+                return
+
             if processed_cmd==DTE:
                 processed_cmd=processed_cmd[:len(processed_cmd)]
 

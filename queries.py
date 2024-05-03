@@ -444,3 +444,24 @@ def select_conversations_given_date(cur, date: str) -> list:
     ")
 
     return cur.fetchall()
+
+
+def select_conversations_given_ai(cur, ai: str) -> list:
+    """
+    select_conversations_given_ai() attempts to query
+    the conversations with the given ai. Once queried,
+    select_conversations_given_ai() returns the result
+    set of the conversations with the given ai.
+
+    Parameters:
+    cur: cursor (The cursor object returned from `conn.cursor()`)
+    ai: string (The target ai)
+
+    Returns:
+    cur.fetchall(): list (The list of table names in the db `ai`)
+    """
+    cur.execute(f"SELECT * FROM conversation \
+        WHERE ai=\'{ai}\';\
+    ")
+
+    return cur.fetchall()

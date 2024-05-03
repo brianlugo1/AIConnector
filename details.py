@@ -44,7 +44,7 @@ def format_conversations(conversations: list[list]) -> None:
     """
     print(format_divider())
 
-    print(f"|{ID}|{DATE}|{TIME}|{TIMEWAITED}|{AI}|")
+    print(f"|{ID}|{DATE}|{TIME}|{TIMEWAITED}|{AIC}|")
 
     print(format_divider())
 
@@ -90,9 +90,32 @@ def details(cur, flag: str) -> None:
         SRT[0]: f"Here is the question that took the {SRT}:",
         "i": f"Here is the conversation with the id [{flag}]",
         DTE[0]: f"Here is the conversations with the given {DTE} [{flag[1:].strip()}]",
+        AI: f"Here is the conversations with the given {AI}"
     }
 
-    if flag==TDY[0]:
+    flag=flag.lower()
+
+    if flag.startswith(AI):
+        ai = flag[2:].strip()
+
+        if ai=="":
+            usage(usage=(DTE+AI))
+            return
+        
+        if ai==GPT[0]:
+            ai=GPT
+        
+        if ai==PER[0]:
+            ai=PER
+
+        if ai==LMA[0]:
+            ai=LMA
+
+        flag=AI
+
+        conversations=select_conversations_given_ai(cur, ai)
+
+    elif flag==TDY[0]:
         conversations=select_questions_asked(cur, TDY[0])
 
     elif flag==YTD[0]:
