@@ -20,7 +20,7 @@ def help_usage() -> None:
     print("Options:")
 
     print(f"    {HLP[0]},       {HLP}: display this message")
-    print(f"    {WLC[0]},       {WLC}: display the welcome message")
+    print(f"    {WLC[0]},    {WLC}: display the welcome message")
     print(f"            {CLR}: clear the console")
     print(f"             {EXT}: exit OpenAIConnector\n")
     print(f"    {GPT[0]},    {GPT}: ask chatgpt a question")
