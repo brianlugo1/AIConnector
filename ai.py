@@ -5,10 +5,11 @@ from ollama import Client
 from openai import OpenAI
 from colorama import Fore
 from format import *
+from usage import usage
 
 
 
-def ai(ai: str, conn, cur, msg: str) -> None:
+def ai(ai: str, conn, cur, stored_msg: str, prompt_msg: str) -> None:
     """
     Given a target ai, a connection, a cursor, and a message,
     ai() attempts to send an api request to the target ai with
@@ -24,14 +25,15 @@ def ai(ai: str, conn, cur, msg: str) -> None:
     ai: string (The name of the target ai)
     conn: connection (The connection object returned from `psycopg2.connect()`)
     cur: cursor (The cursor object returned from `conn.cursor()`)
-    msg: string (The prompt message asked to the target ai)
+    stored_msg: string (The prompt message asked to the target ai to be stored)
+    prompt_msg: string (The prompt message asked to the target ai)
 
     Returns:
     None
     """
     questions=search_question(
         cur,
-        format_escape_single_and_double_quotes(msg),
+        format_escape_single_and_double_quotes(stored_msg),
         ai
     )
 
@@ -64,7 +66,7 @@ def ai(ai: str, conn, cur, msg: str) -> None:
                 messages=[
                     {
                         'role': 'user',
-                        'content': msg,
+                        'content': prompt_msg,
                     }
                 ]
             )
@@ -75,15 +77,20 @@ def ai(ai: str, conn, cur, msg: str) -> None:
                 base_url=base_url
             )
 
-            completion=client.chat.completions.create(
-                model=model,
-                messages=[
-                    {
-                        'role': 'user',
-                        'content': msg,
-                    }
-                ],
-            )
+            try:
+                completion=client.chat.completions.create(
+                    model=model,
+                    messages=[
+                        {
+                            'role': 'user',
+                            'content': prompt_msg,
+                        }
+                    ],
+                )
+            except Exception as e:
+                usage(usage=AIE, ai=ai, ai_exception=e)
+
+                return
 
         toc=time.perf_counter()
 
@@ -96,7 +103,7 @@ def ai(ai: str, conn, cur, msg: str) -> None:
 
         print()
 
-        question=format_escape_single_and_double_quotes(msg)
+        question=format_escape_single_and_double_quotes(stored_msg)
 
         answer=""
 
@@ -125,6 +132,6 @@ def ai(ai: str, conn, cur, msg: str) -> None:
 
         print(format_divider())
 
-        msg=format_escape_single_and_double_quotes(msg)
+        stored_msg=format_escape_single_and_double_quotes(stored_msg)
 
-        increase_count_of_question(conn, cur, msg, ai)
+        increase_count_of_question(conn, cur, stored_msg, ai)

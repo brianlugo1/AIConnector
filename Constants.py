@@ -50,7 +50,9 @@ STD_FLGS_1ST_CHAR=[
 ]
 
 AI="ai"
+AIE="ai_exception"
 FLE="file"
+LNK="link"
 PRB="probable"
 
 COLUMN_WIDTH=13
@@ -62,3 +64,5 @@ TIMEWAITED="Time Waited".center(COLUMN_WIDTH, ' ')
 AI="AI".center(COLUMN_WIDTH, ' ')
 
 STANDARD_TEXT_WIDTH=70
+
+STANDARD_TIMEOUT=3

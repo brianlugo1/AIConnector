@@ -42,6 +42,22 @@ def ai_usage(ai: str) -> None:
     print(f"{Fore.RED}Usage: {ai} {ai[:1]} [question]")
 
 
+def ai_exception_message(ai: str, ai_exception: str) -> None:
+    """
+    ai_exception_usage() prints out the
+    exception that was raised by the
+    target ai.
+
+    Paramters:
+    ai: string (The parsed target ai)
+    ai_exception: string (The exception message raised by the target ai)
+
+    Returns:
+    None
+    """
+    print(f"{Fore.RED}Exception raised by {ai}:\n{ai_exception}")
+
+
 def details_usage() -> None:
     """
     details_usage() prints the information
@@ -127,6 +143,21 @@ def file_not_found_usage(m) -> None:
     print(f"{Fore.RED}aicp: no such file or directory: {m}")
 
 
+def link_not_found_message(m) -> None:
+    """
+    link_not_found_usage() prints out
+    information about the unknown parsed
+    link or url.
+
+    Paramters:
+    m: string (The unknown link or url parsed)
+
+    Returns:
+    None
+    """
+    print(f"{Fore.RED}aicp: no such link or url: {m}")
+
+
 def probable_command_usage(m: str) -> None:
     """
     probable_command_usage() prints out
@@ -142,7 +173,7 @@ def probable_command_usage(m: str) -> None:
     print(f"aicp: did you mean to type {m}?")
 
 
-def usage(usage: str="", ai: str="", file_not_found: str="", probable_command: str="", command_not_found: str="") -> None:
+def usage(usage: str="", ai: str="", ai_exception: str="", file_not_found: str="", link_not_found: str="", probable_command: str="", command_not_found: str="") -> None:
     """
     usage() calls the corresponding functions
     for the given flag and passes the passed
@@ -151,7 +182,9 @@ def usage(usage: str="", ai: str="", file_not_found: str="", probable_command: s
     Paramters:
     usage: string (The usage flag)
     ai: string (The parsed target ai)
+    ai_exception: string (The exception message raised by the target ai)
     file_not_found: string (The unknown parsed file or directory)
+    link_not_found: string (The unknown parsed link or url)
     probable_command: string (The probable command)
     command_not_found: string (The unknown parsed command)
 
@@ -164,6 +197,9 @@ def usage(usage: str="", ai: str="", file_not_found: str="", probable_command: s
     elif usage==AI:
         ai_usage(ai)
 
+    elif usage==AIE:
+        ai_exception_message(ai, ai_exception)
+
     elif usage==DTS:
         details_usage()
 
@@ -175,6 +211,9 @@ def usage(usage: str="", ai: str="", file_not_found: str="", probable_command: s
 
     elif usage==FLE:
         file_not_found_usage(file_not_found)
+    
+    elif usage==LNK:
+        link_not_found_message(link_not_found)
 
     elif usage==PRB:
         probable_command_usage(probable_command)

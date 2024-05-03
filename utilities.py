@@ -9,6 +9,7 @@ from colorama import init, Fore
 from Levenshtein import distance
 from format import *
 from typing import Tuple
+import requests
 
 
 
@@ -105,13 +106,113 @@ def split_cmds(cmds: str) -> list[str]:
     return cmds.split(";")
 
 
+def parse_ai_flags(msg: str, ai_cmd: str) -> str | None:
+    """
+    parse_ai_flags() attempts to parse
+    the ai flag that can either be:
+
+    f [filename] -> Specify the filename
+    to parse and append to prompt message.
+
+    or
+
+    l [link] -> Specify the link of a webpage
+    to parse and append to the prompt message.
+
+    Then attempts to add the contents of
+    the file or url with the prompt
+    message.
+
+    Parameters:
+    msg: string (The ai flags with prompt message asked to the target ai)
+    msg: string (The target ai)
+
+    Returns:
+    new_msg: string (The prompt message with the specified file or url contents)
+    or
+    None
+    """
+    cmd_args = msg.split(" ")
+
+    file_contents = ""
+
+    url_contents = ""
+
+    first_arg_found = False
+
+    first_arg = cmd_args[0]
+
+    first_arg_filename = ""
+
+    first_arg_url = ""
+
+    if first_arg == FLE[0] or first_arg == FLE:
+        if len(cmd_args) < 2:
+            usage(usage=AI, ai=ai_cmd)
+            return
+
+        first_arg_found = True
+
+        first_arg_filename = cmd_args[1]
+
+        try:
+            with open(first_arg_filename, 'r') as f:
+                file_contents = f.read()
+
+        except:
+            usage(usage=FLE, file_not_found=first_arg_filename)
+            return
+
+    if first_arg == LNK[0] or first_arg == LNK:
+        if len(cmd_args) < 2:
+            usage(usage=AI, ai=ai_cmd)
+            return
+
+        first_arg_found = True
+
+        first_arg_url = cmd_args[1]
+
+        if not first_arg_url.startswith("https://"):
+            first_arg_url = "https://" + first_arg_url
+
+        try:
+            response = requests.get(first_arg_url, timeout=STANDARD_TIMEOUT)
+
+            response.raise_for_status()
+
+            url_contents = response.text
+
+        except:
+            usage(usage=LNK, link_not_found=first_arg_url)
+            return
+
+    if first_arg_found:
+        cmd_args = cmd_args[2:]
+    
+    if len(cmd_args) == 0:
+        usage(usage=AI, ai=ai_cmd)
+        return
+
+    new_msg = " ".join(cmd_args)
+
+    if file_contents:
+        new_msg += f" Filename: {first_arg_filename}, File Contents: {file_contents}"
+
+    if url_contents:
+        new_msg += f" Url: {first_arg_url}, Url Contents: {url_contents}"
+
+    return new_msg
+
+
+
 def process_ai_cmd(conn, cur, msg: str, ai_cmd: str) -> None:
     """
     process_ai_cmd() calls usage() with the
     flag of AI constant column string and
     the target ai if no prompt message is
-    passed. Otherwise call ai() with the
-    parsed prompt message and target ai.
+    passed. Otherwise calls parse_ai_flags()
+    and ai() with the parsed prompt message
+    and target ai.
 
     Parameters:
     conn: connection (The connection object returned from `psycopg2.connect()`)
@@ -126,7 +227,12 @@ def process_ai_cmd(conn, cur, msg: str, ai_cmd: str) -> None:
         usage(usage=AI, ai=ai_cmd)
         return
 
-    ai(ai_cmd, conn, cur, msg.strip())
+    new_msg = parse_ai_flags(msg, ai_cmd)
+
+    if new_msg == None:
+        return
+
+    ai(ai_cmd, conn, cur, msg.strip(), new_msg.strip())
 
 
 def process_details_cmd(cur, cmd: str) -> None:
