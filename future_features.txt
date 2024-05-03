@@ -18,15 +18,11 @@
 [x] Allow the ability to pass a file to be read in chatgpt!
 [x] Allow the ability to add a link for text chatgpt!
 
-[] Save money by removing unnecessary tokens in users' messages sent.
-
 [] Filter by length of question and answer to display the shortest and longest!
 
 [] From the generated code, create a file with that code!
 
 [] Create a dictionary with storing!
-
-[] Use texplorer to search words!
 
 [] Add length of a question and answer
 
