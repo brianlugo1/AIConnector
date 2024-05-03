@@ -5,50 +5,12 @@ from usage import usage
 from Constants import *
 from details import details
 from dotenv import load_dotenv
-from colorama import init, Fore
+from colorama import init
 from Levenshtein import distance
 from format import *
 from typing import Tuple
 import requests
 
-
-
-def print_welcome_message() -> None:
-    """
-    print_welcome_message() prints out the
-    information about aicp and what supported
-    commands exist.
-
-    Parameters:
-    None
-
-    Returns:
-    None
-    """
-    print(f"{Fore.CYAN}{format_divider()}")
-    print(format_welcome_text("Welcome to AIConnector"))
-    print(format_welcome_text(""))
-    print(format_welcome_text("I was created to help you connect with"))
-    print(format_welcome_text("ChatGPT, Perplexity, Llama and provide"))
-    print(format_welcome_text("insightful analytics about your"))
-    print(format_welcome_text("conversations!"))
-    print(format_welcome_text(""))
-    print(format_welcome_text("To ask ChatGPT a question simply type:"))
-    print(format_welcome_text(f"{GPT} or {GPT[0]}"))
-    print(format_welcome_text(""))
-    print(format_welcome_text("To ask Perplexity a question simply type:"))
-    print(format_welcome_text(f"{PER} or {PER[0]}"))
-    print(format_welcome_text(""))
-    print(format_welcome_text("To ask Llama a question simply type:"))
-    print(format_welcome_text(f"{LMA} or {LMA[0]}"))
-    print(format_welcome_text(""))
-    print(format_welcome_text("To view a detailed report type:"))
-    print(format_welcome_text(f"{DTS} or {DTS[0]}"))
-    print(format_welcome_text(""))
-    print(format_welcome_text("To ask for help type:"))
-    print(format_welcome_text(f"{HLP} or {HLP[0]}"))
-    print(format_welcome_text(""))
-    print(f"{format_divider()}\n")
 
 
 def setup() -> Tuple | Tuple[None, None]:
@@ -57,10 +19,8 @@ def setup() -> Tuple | Tuple[None, None]:
     and attempts to create a connection to postgresql server.
     If the attempt to connect to the postgresql server fails,
     a tuble of None, None is returned. setup() then creates
-    the table in the db. setup() then clears the console,
-    prints the welcome message, and returns the conn and
-    cur objects.
-
+    the table in the db. setup() then clears the console and
+    returns the conn and cur objects.
 
     Parameters:
     None
@@ -81,8 +41,6 @@ def setup() -> Tuple | Tuple[None, None]:
     create_table(conn, cur)
 
     os.system(CLR)
-
-    print_welcome_message()
 
     return conn, cur
 
@@ -339,6 +297,10 @@ def exec_cmd(conn, cur, cmds: str) -> int:
         if processed_cmd=="":
             continue
 
+        elif processed_cmd==WLC[0]:
+            usage(usage=WLC)
+            continue
+
         elif processed_cmd==HLP[0]:
             usage(usage=HLP)
             continue
@@ -402,6 +364,9 @@ def exec_cmd(conn, cur, cmds: str) -> int:
 
             elif probable_command==HLP:
                 usage(usage=HLP)
+
+            elif probable_command==WLC:
+                usage(usage=WLC)
 
             elif probable_command==GPT:
                 process_ai_cmd(conn, cur, cmd[GPT_LEN:].strip(), GPT)

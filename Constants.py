@@ -1,5 +1,6 @@
 EXT="exit"
 HLP="help"
+WLC="welcome"
 CLR="clear"
 
 GPT="chatgpt"
@@ -22,6 +23,7 @@ DTE="date"
 STD_CMDS=[
     EXT,
     HLP,
+    WLC,
     CLR,
     GPT,
     PER,

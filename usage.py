@@ -1,5 +1,6 @@
 from Constants import *
 from colorama import Fore
+from format import *
 
 
 
@@ -19,12 +20,52 @@ def help_usage() -> None:
     print("Options:")
 
     print(f"    {HLP[0]},       {HLP}: display this message")
+    print(f"    {WLC[0]},       {WLC}: display the welcome message")
     print(f"            {CLR}: clear the console")
     print(f"             {EXT}: exit OpenAIConnector\n")
     print(f"    {GPT[0]},    {GPT}: ask chatgpt a question")
     print(f"    {PER[0]}, {PER}: ask perplexity a question")
     print(f"    {LMA[0]},      {LMA}: ask llama a question")
     print(f"    {DTS[0]},    {DTS}: view details about existing conversations")
+
+
+def welcome_usage() -> None:
+    """
+    welcome_usage() prints out the
+    information about aicp and what supported
+    commands exist.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
+    print(f"{Fore.CYAN}{format_divider()}")
+    print(format_welcome_text("Welcome to AIConnector"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("I was created to help you connect with"))
+    print(format_welcome_text("ChatGPT, Perplexity, Llama and provide"))
+    print(format_welcome_text("insightful analytics about your"))
+    print(format_welcome_text("conversations!"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask ChatGPT a question simply type:"))
+    print(format_welcome_text(f"{GPT} or {GPT[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask Perplexity a question simply type:"))
+    print(format_welcome_text(f"{PER} or {PER[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask Llama a question simply type:"))
+    print(format_welcome_text(f"{LMA} or {LMA[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To view a detailed report type:"))
+    print(format_welcome_text(f"{DTS} or {DTS[0]}"))
+    print(format_welcome_text(""))
+    print(format_welcome_text("To ask for help type:"))
+    print(format_welcome_text(f"{HLP} or {HLP[0]}"))
+    print(format_welcome_text(""))
+    print(f"{format_divider()}\n")
+
 
 
 def ai_usage(ai: str) -> None:
@@ -193,6 +234,9 @@ def usage(usage: str="", ai: str="", ai_exception: str="", file_not_found: str="
     """
     if usage==HLP:
         help_usage()
+    
+    if usage==WLC:
+        welcome_usage()
 
     elif usage==AI:
         ai_usage(ai)
