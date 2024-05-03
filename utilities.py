@@ -297,12 +297,20 @@ def exec_cmd(conn, cur, cmds: str) -> int:
         if processed_cmd=="":
             continue
 
+        elif processed_cmd==EXT[0]:
+            exit_code=1
+            break
+
         elif processed_cmd==WLC[0]:
             usage(usage=WLC)
             continue
 
         elif processed_cmd==HLP[0]:
             usage(usage=HLP)
+            continue
+        
+        elif cmd==CLR[0]:
+            os.system(CLR)
             continue
 
         elif processed_cmd==GPT[0]:
