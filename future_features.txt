@@ -15,14 +15,12 @@
 [x] Add tab for autocomplete commands and flags.
 [x] Add Llama local client support!
 [x] Add comments for descripting what all existing functions do, the parameters they get passed, and return values!
+[x] Allow the ability to pass a file to be read in chatgpt!
+[x] Allow the ability to add a link for text chatgpt!
 
 [] Save money by removing unnecessary tokens in users' messages sent.
 
 [] Filter by length of question and answer to display the shortest and longest!
-
-[] Allow the ability to pass a file to be read in chatgpt!
-
-[] Allow the ability to add a link for text chatgpt!
 
 [] From the generated code, create a file with that code!
 
