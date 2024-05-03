@@ -18,13 +18,15 @@
 [x] Allow the ability to pass a file to be read in chatgpt!
 [x] Allow the ability to add a link for text chatgpt!
 
-[] Filter by length of question and answer to display the shortest and longest!
-
-[] From the generated code, create a file with that code!
-
-[] Create a dictionary with storing!
+[] Filter by ai asked!
 
 [] Add length of a question and answer
+
+[] Filter by length of question and answer to display the shortest and longest!
+
+[] Add the feature to search by a word or phrase!
+
+[] From the generated code, create a file with that code!
 
 [] Export feature -> create a log file of conversations on a given day!
     - Export to CSV
@@ -32,7 +34,5 @@
     - Export to Markdown
 
 [] Add feature that when question asked is stored, prompt to use stored answer or ask corresponding ai again!
-
-[] Filter by ai asked!
 
 [] Keep an array of asked questions for Chatgpt, Perplexity, and Llama to have the context when asking questions!
