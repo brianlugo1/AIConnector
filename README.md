@@ -181,6 +181,12 @@ Then run the command:
 Copy and paste the output to where `full/path/to` is.
 e.g. `/Users/your_user_name/OpenAI/AIConnector.py`
 
+UPDATE:
+Run ./install.sh to install the aicp command on MacOS!
+
+Run ./uninstall.sh to uninstall the aicp command on MacOS!
+
+Run ./update.sh to push any development changes made on MacOS!
 
 
 Create an executable of aicp:
