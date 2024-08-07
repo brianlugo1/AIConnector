@@ -2,9 +2,9 @@
 
 chmod +x ./AIConnector.py
 
-sudo mkdir /usr/local/bin/AIConnector/
+sudo mkdir -p /usr/local/bin/AIConnector/
 
 sudo cp *.py /usr/local/bin/AIConnector
 
-ln /usr/local/bin/AIConnector/AIConnector.py /usr/local/bin/aicp
+sudo ln -s /usr/local/bin/AIConnector/AIConnector.py /usr/local/bin/aicp
 
