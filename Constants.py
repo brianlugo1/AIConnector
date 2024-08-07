@@ -53,6 +53,19 @@ STD_FLGS_1ST_CHAR=[
     DTE[0],
 ]
 
+# TODO work on creating a utility for flag/cmd detection!!!
+STD_AIS=[
+    GPT,
+    PER,
+    LMA,
+]
+
+STD_AIS_1ST_CHAR=[
+    GPT[0],
+    PER[0],
+    LMA[0],
+]
+
 AIE="ai_exception"
 FLE="file"
 LNK="link"
